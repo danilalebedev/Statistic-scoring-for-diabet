@@ -63,7 +63,7 @@ class StreamlitBundleTests(unittest.TestCase):
             initial = index.stat().st_mtime_ns
             self.assertEqual(index.read_text(encoding="utf-8"), build_html())
             self.assertIn('notify("streamlit:componentReady", {apiVersion: 1})', index.read_text(encoding="utf-8"))
-            self.assertIn('notify("streamlit:setFrameHeight", {height: 1000})', index.read_text(encoding="utf-8"))
+            self.assertIn('notify("streamlit:setFrameHeight", {height})', index.read_text(encoding="utf-8"))
             write_component(directory)
             self.assertEqual(index.stat().st_mtime_ns, initial)
             self.assertEqual([file.name for file in directory.iterdir()], ["index.html"])

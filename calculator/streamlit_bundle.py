@@ -102,13 +102,43 @@ if (guideLink) {
 }
 if (window.parent !== window) {
   const notify = (type, data) => window.parent.postMessage({isStreamlitMessage: true, type, ...data}, "*");
+  let lastHeight = 0;
+  let heightPending = false;
+  const updateHeight = () => {
+    heightPending = false;
+    const main = document.querySelector("main");
+    // Measure content rather than the iframe viewport, so a shorter tab can
+    // shrink again after the long methodology page has been opened.
+    const bottom = main ? main.getBoundingClientRect().bottom + window.scrollY : document.body.scrollHeight;
+    const height = Math.max(200, Math.ceil(bottom + 16));
+    if (height !== lastHeight) {
+      lastHeight = height;
+      notify("streamlit:setFrameHeight", {height});
+    }
+  };
+  const scheduleHeight = () => {
+    if (heightPending) return;
+    heightPending = true;
+    window.requestAnimationFrame(updateHeight);
+  };
   window.addEventListener("message", event => {
     if (event.source === window.parent && event.data?.type === "streamlit:render") {
-      notify("streamlit:setFrameHeight", {height: 1000});
+      scheduleHeight();
     }
   });
+  window.addEventListener("load", scheduleHeight);
+  window.addEventListener("resize", scheduleHeight);
+  if (typeof ResizeObserver !== "undefined") {
+    new ResizeObserver(scheduleHeight).observe(document.querySelector("main") || document.body);
+  }
+  if (typeof MutationObserver !== "undefined") {
+    new MutationObserver(scheduleHeight).observe(document.body, {
+      subtree: true, attributes: true, childList: true, characterData: true
+    });
+  }
+  if (document.fonts) document.fonts.ready.then(scheduleHeight);
   notify("streamlit:componentReady", {apiVersion: 1});
-  notify("streamlit:setFrameHeight", {height: 1000});
+  scheduleHeight();
 }""".replace("BUNDLE_DATA", bundle)
 
     # Script data is serialized above; owned app code currently has no closing
