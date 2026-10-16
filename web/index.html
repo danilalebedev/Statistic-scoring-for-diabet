@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Прогноз офтальмологической нагрузки</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <aside class="sidebar" aria-label="Навигация">
+    <a class="brand" href="#calculation" aria-label="Начало расчёта">
+      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M12 4h8v8h8v8h-8v8h-8v-8H4v-8h8z" fill="currentColor"/><circle cx="16" cy="16" r="4" fill="#102e3b"/></svg></span>
+      <span>Клиническое<br><strong>планирование</strong></span>
+    </a>
+    <div class="sidebar-label">РАБОЧЕЕ ПРОСТРАНСТВО</div>
+    <nav class="nav-list">
+      <button class="nav-item active" data-view="calculation" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8 8h8M8 13h2m4 0h2M8 17h2m4 0h2"/></svg>Расчёт<span class="nav-dot"></span></button>
+      <button class="nav-item" data-view="parameters" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h9m4 0h3M4 17h3m4 0h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg>Параметры</button>
+      <button class="nav-item" data-view="method" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h6a3 3 0 0 1 3 3v14a4 4 0 0 0-4-2H4zm16 0h-4a3 3 0 0 0-3 3M20 4v15h-3"/></svg>Модель и источники</button>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="local-indicator"><span></span><span id="runtime-label">В браузере</span></div>
+      <p id="runtime-privacy">Расчёт на вашем устройстве.<br>Сценарий не отправляется<br>на сервер.</p>
+      <div class="sidebar-footnote">ПРЛК · ИВВ при ДМО · витрэктомия</div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="page-header">
+      <div>
+        <div class="eyebrow">ДИАБЕТИЧЕСКАЯ РЕТИНОПАТИЯ</div>
+        <h1>Прогноз офтальмологической нагрузки</h1>
+        <p class="subtitle">Пациенты и вмешательства на следующие 12 месяцев</p>
+      </div>
+      <span class="prototype-badge"><span></span>Исследовательский прототип</span>
+    </header>
+
+    <div id="app-error" class="error-banner" role="alert" hidden></div>
+
+    <section id="view-calculation" class="view active" aria-label="Расчёт прогноза">
+      <div class="toolbar">
+        <div class="toolbar-context"><span class="mini-icon">12</span><span>Горизонт <strong>12 месяцев</strong></span><span class="toolbar-divider"></span><span><strong>8</strong> групп пациентов</span></div>
+        <div class="toolbar-actions">
+          <button class="button button-quiet" id="load-scenario" type="button"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v9m-3-3 3 3 3-3M4 13v4h12v-4"/></svg>Открыть сценарий</button>
+          <button class="button button-quiet" id="save-scenario" type="button"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 13V4M7 7l3-3 3 3M4 13v4h12v-4"/></svg>Сохранить</button>
+        </div>
+      </div>
+
+      <section class="card scenario-card">
+        <div class="card-heading"><div><h2>Исходный сценарий</h2><p>Задайте численность и состав контингента</p></div><span class="step-label">01 / ВХОДНЫЕ ДАННЫЕ</span></div>
+        <div class="baseline-scenario"><span class="baseline-mark" aria-hidden="true">8</span><div><strong>Годовая потребность по группам из СД.docx</strong><p>Два типа диабета × четыре категории стажа. Исходные риски можно обновить в параметрах.</p></div><span class="unit-tag">12 МЕСЯЦЕВ</span></div>
+        <div class="scope-note" id="profile-note"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7"/><path d="M10 9v5m0-8v.5"/></svg><span>Загрузка описания модели…</span></div>
+        <div class="overall-population"><div class="overall-population-field"><label class="field-title" for="overall-population">Размер контингента, человек</label><input id="overall-population" type="number" min="0" max="80000000" step="1" value="8000" aria-label="Общий размер контингента, человек"></div><button class="button button-outline" id="apply-population" type="button">Применить размер</button><button class="text-button" id="equal-population" type="button">Поровну между группами</button><p id="population-allocation-note">Размер распределяется пропорционально текущему составу восьми групп.</p></div>
+        <div class="population-heading"><h3>Состав контингента</h3><div class="population-tools"><span>Сумма групп: <strong id="population-total">8 000</strong></span><button class="text-button" id="reset-population" type="button">По 1 000 в группе</button></div></div>
+        <div class="table-scroll population-scroll"><table class="population-table"><thead><tr><th scope="col">Тип диабета</th><th scope="col">Стаж &lt;5 лет</th><th scope="col">5–9 лет</th><th scope="col">10–19 лет</th><th scope="col">≥20 лет</th></tr></thead><tbody id="population-body"></tbody></table></div>
+        <div class="scenario-footer"><p><span class="small-info">i</span>Числа 1 000 — условная база сравнения. Укажите свою популяцию.</p><button class="text-button with-arrow" data-open-parameters type="button">Риски и кратность <span>↗</span></button></div>
+      </section>
+
+      <div class="concrete-model"><span class="model-symbol" aria-hidden="true">Σ</span><div><strong>Биномиальная модель + случайная кратность процедур</strong><p id="concrete-model-description">Риски фиксированы при CV = 0. SD кратности учитывает различия в числе процедур между пациентами.</p></div><button class="text-button" data-view-link="method" type="button">Как рассчитывается ↗</button></div>
+      <section class="forecast-settings card">
+        <div class="coverage-block"><label class="field-title" for="coverage-custom">Вероятность покрытия прогноза <span class="help" title="Центральный предиктивный интервал будущего числа пациентов или процедур при принятых допущениях.">?</span></label><div class="coverage-controls"><div class="segmented" id="coverage-presets" aria-label="Вероятность покрытия"><button type="button" data-coverage="80">80%</button><button type="button" data-coverage="90">90%</button><button type="button" data-coverage="95" class="selected" aria-pressed="true">95%</button><button type="button" data-coverage="99">99%</button></div><div class="input-suffix compact"><input id="coverage-custom" type="number" min="50" max="99.9" step="0.1" value="95" aria-label="Задать вероятность покрытия в процентах"><span>%</span></div></div></div>
+        <div class="simulation-block"><label class="field-title" for="iterations">Симуляции</label><select id="iterations"><option value="20000" selected>20 000</option><option value="50000">50 000</option><option value="100000">100 000</option></select></div>
+        <div class="seed-block"><label class="field-title" for="seed">Seed <span class="help" title="Фиксированное число для воспроизводимого расчёта.">?</span></label><input id="seed" type="number" min="0" max="4294967295" step="1" value="2026"></div>
+        <button class="button button-primary calculate-button" id="calculate" type="button"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m7 4 7 6-7 6z"/></svg><span>Рассчитать прогноз</span></button>
+      </section>
+
+      <section class="results-section" aria-labelledby="results-title" aria-busy="false">
+        <div class="results-heading"><div class="results-title-line"><h2 id="results-title">Ожидаемая нагрузка</h2><span class="result-status" id="result-status">Расчёт не выполнен</span></div><div class="results-meta" id="results-meta">12 месяцев · центральный интервал 95%</div></div>
+        <div id="result-empty" class="empty-state card"><div class="empty-chart" aria-hidden="true"><i></i><i></i><i></i><span></span></div><h3>Задайте сценарий и рассчитайте нагрузку</h3><p>Модель оценит пациентов, количество процедур<br>и диапазон возможных значений для каждой группы.</p></div>
+        <div id="result-content" hidden>
+          <div class="summary-grid" id="summary-cards"></div>
+          <section class="card chart-card"><div class="chart-header"><div><h2>Распределение по группам</h2><p id="chart-description">Среднее и предиктивный интервал</p></div><div class="segmented measure-toggle" id="measure-toggle" aria-label="Показатель"><button type="button" data-measure="patients" class="selected" aria-pressed="true">Пациенты</button><button type="button" data-measure="procedures">Процедуры</button></div></div><div class="chart-subheader"><div class="intervention-tabs" id="intervention-tabs" aria-label="Тип вмешательства"><button type="button" data-intervention="prp" class="active">ПРЛК</button><button type="button" data-intervention="dme">ИВВ при ДМО</button><button type="button" data-intervention="vit">Витрэктомия</button></div><div class="chart-legend"><span class="legend-bar"></span>Среднее<span class="legend-interval">├─┤</span><span id="legend-coverage">Интервал 95%</span></div></div><div id="forecast-chart" class="forecast-chart" role="img" aria-label="Прогноз по восьми группам"></div><div class="chart-footnote">Интервалы отдельных групп не складываются. Городские или больничные итоги рассчитываются совместно.</div></section>
+          <section class="card detail-card"><div class="card-heading"><div><h2>Подробные результаты</h2><p id="detail-description">Показатели по выбранному вмешательству</p></div><button class="button button-outline" id="export-csv" type="button"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v9m-3-3 3 3 3-3M4 13v4h12v-4"/></svg>CSV</button></div><div class="table-scroll"><table class="detail-table"><thead><tr><th scope="col">Группа</th><th scope="col">Среднее</th><th scope="col">Дисперсия</th><th scope="col">Станд. откл.</th><th scope="col" id="interval-column-label">Интервал 95%</th><th scope="col" id="capacity-column-label">Мощность P95</th></tr></thead><tbody id="detail-body"></tbody></table></div><div class="detail-footer"><p id="capacity-explanation">Мощность — односторонний квантиль: запас для покрытия нагрузки с выбранной вероятностью.</p><button class="text-button" id="export-json" type="button">Скачать полный расчёт JSON ↓</button></div></section>
+          <div id="result-warnings" class="result-warnings"></div>
+          <div class="interpretation-note"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7"/><path d="M10 9v5m0-8v.5"/></svg><p>Прогноз зависит от популяции, выбранных рисков и маршрутизации. Значения из зарубежных исследований требуют проверки на местных данных. Один пациент может получить несколько типов лечения.</p></div>
+        </div>
+      </section>
+    </section>
+
+    <section id="view-parameters" class="view" aria-label="Параметры модели" hidden>
+      <div class="view-intro"><div><h2>Параметры сценария</h2><p>Все допущения доступны для просмотра и изменения.</p></div><button class="button button-outline" id="reset-parameters" type="button">Вернуть исходные</button></div>
+      <div class="scope-note parameters-scope"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7"/><path d="M10 9v5m0-8v.5"/></svg><span id="parameters-profile-note">Параметры выбранного профиля</span></div>
+      <section class="card" id="risk-card"><div class="card-heading"><div><h2>Годовые риски по группам</h2><p>Число пациентов с исходом на 1 000 человек в соответствующей группе</p></div><span class="unit-tag">НА 1 000 / ГОД</span></div>
+        <div class="risk-lock-toolbar"><div class="risk-lock-description"><span class="risk-lock-status" id="risk-lock-status" role="status" aria-live="polite">Риски зафиксированы</span><span class="risk-baseline-badge" id="risk-baseline-badge">Исходные значения</span><p id="risk-lock-note">Таблица защищена от случайных изменений. Для обновления включите редактирование.</p></div><div class="risk-lock-actions"><button class="button button-outline" id="toggle-risk-editing" type="button" aria-controls="risk-body risk-revision" aria-pressed="false">Редактировать риски</button><button class="text-button" id="restore-risks" type="button">Вернуть исходные риски</button></div></div>
+        <div class="table-scroll"><table class="risk-table"><thead><tr><th scope="col">Группа</th><th scope="col">ПРЛК</th><th scope="col">ИВВ при ДМО</th><th scope="col">Витрэктомия</th></tr></thead><tbody id="risk-body"></tbody></table></div>
+        <div class="risk-revision" id="risk-revision"><div class="risk-revision-fields"><div><label for="risk-source">Источник обновления <span>необязательно</span></label><input id="risk-source" type="text" maxlength="512" placeholder="Название исследования, DOI или данные больницы" readonly></div><div><label for="risk-data-date">Дата новых данных <span>необязательно</span></label><input id="risk-data-date" type="date" min="1900-01-01" max="2100-12-31" readonly></div></div><label for="risk-revision-note">Примечание к рискам <span>необязательно</span></label><textarea id="risk-revision-note" rows="2" maxlength="2000" placeholder="Какие группы и исходы обновлены, на основании каких данных" readonly></textarea><p id="risk-revision-stamp">Изменения относятся только к текущему сценарию. Сохраните JSON, чтобы использовать их позже.</p></div>
+        <div class="risk-provenance" id="risk-provenance"></div>
+      </section>
+      <div class="parameter-grid"><section class="card"><div class="card-heading"><div><h2>Неопределённость и поток</h2><p>Базовый расчёт: фиксированные вероятности, CV = 0</p></div></div><div class="table-scroll"><table class="assumptions-table"><thead><tr><th>Вмешательство</th><th>CV интенсивности, %</th><th>Доля потока, %</th></tr></thead><tbody id="uncertainty-body"></tbody></table></div><div class="parameter-explanation">При CV = 0 пациенты моделируются биномиально с фиксированным риском. CV &gt;0 добавляет сценарный общий множитель интенсивности и зависимость между группами. Это не измеренный доверительный интервал. Доля потока — часть потребности, направляемая в эту больницу.</div></section><section class="card"><div class="card-heading"><div><h2>Кратность вмешательств</h2><p>Среднее и SD числа процедур у получающих лечение</p></div></div><div id="multiplicity-controls" class="multiplicity-controls"></div><div class="parameter-explanation" id="multiplicity-note">Среднее и стандартное отклонение относятся к выбранной схеме лечения. Для ИВВ отдельно учитывается второй глаз.</div></section></div>
+      <section class="card provenance-card"><div class="card-heading"><div><h2>Основания и ограничения</h2><p>Источники и применимость данных</p></div></div><div id="profile-sources" class="profile-sources"></div></section>
+      <div class="parameter-bottom"><button class="button button-primary" id="return-calculate" type="button">К расчёту <span aria-hidden="true">→</span></button><span>Изменения применятся при следующем расчёте.</span></div>
+    </section>
+
+    <section id="view-method" class="view" aria-label="Описание модели и источники" hidden>
+      <div class="view-intro"><div><h2>Как устроен прогноз</h2><p>Определения, вероятностная модель и научные источники</p></div><span class="unit-tag">ПРОЗРАЧНЫЕ ДОПУЩЕНИЯ</span></div>
+      <div class="method-principles"><div><span>01</span><h3>Пациенты → процедуры</h3><p>Риск потребности и число повторных вмешательств оцениваются раздельно.</p></div><div><span>02</span><h3>Распределение → интервал</h3><p>Симуляции учитывают случайный разброс и неопределённость параметров.</p></div><div><span>03</span><h3>Данные → калибровка</h3><p>Риски берутся из исходной таблицы, кратность — из исследований. Точность проверяют на данных больницы.</p></div></div>
+      <section class="card method-document"><div class="card-heading"><div><h2>Описание модели</h2><p>Методика и ограничения исследовательского прототипа</p></div><a class="text-button" href="/docs/model-guide.html" target="_blank" rel="noopener">Открыть отдельно ↗</a></div><div id="guide-loading" class="guide-loading">Загрузка методики…</div><iframe id="model-guide" title="Описание вероятностной модели" sandbox="allow-same-origin allow-popups allow-popups-to-escape-sandbox" hidden></iframe></section>
+      <section class="card"><div class="card-heading"><div><h2>Реестр источников</h2><p>Первичные исследования и происхождение параметров</p></div></div><div id="all-sources" class="all-sources"></div></section>
+    </section>
+
+    <footer class="page-footer"><span>Исследовательское планирование · локальный прототип</span><span>Без персональных данных</span></footer>
+  </main>
+  <input id="scenario-file" type="file" accept="application/json,.json" hidden>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>

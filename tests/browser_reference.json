@@ -1,0 +1,5024 @@
+{
+  "config": {
+    "model_version": "1.1.0",
+    "model_name": "Стратифицированная биномиальная модель пациентов с составным распределением числа процедур",
+    "dme_moment_presets": [
+      {
+        "id": "IRIS2024",
+        "label": "IRIS · 3,9 ± 2,8 на глаз",
+        "mean": 3.9,
+        "sd": 2.8,
+        "source_id": "IRIS2024",
+        "note": "Первый год в реальной практике США; SD индивидуальных количеств инъекций используется напрямую."
+      },
+      {
+        "id": "Peto2022",
+        "label": "Peto · 7,7 ± 1,9 на глаз",
+        "mean": 7.7,
+        "sd": 1.9,
+        "source_id": "Peto2022",
+        "note": "Первый год наблюдаемой подгруппы; не безусловное среднее всех вошедших. Разброс ниже пуассоновского."
+      },
+      {
+        "id": "DRAKO2023",
+        "label": "DRAKO · 6,4 ± 2,1 на глаз",
+        "mean": 6.4,
+        "sd": 2.1,
+        "source_id": "DRAKO2023",
+        "note": "Наблюдаемая группа ранее не леченных в первый год; отбор по полноте наблюдения."
+      }
+    ],
+    "groups": [
+      {
+        "id": "t1_lt5",
+        "type": "СД1",
+        "duration": "<5 лет",
+        "label": "СД1 · <5 лет"
+      },
+      {
+        "id": "t1_5_9",
+        "type": "СД1",
+        "duration": "5–9 лет",
+        "label": "СД1 · 5–9 лет"
+      },
+      {
+        "id": "t1_10_19",
+        "type": "СД1",
+        "duration": "10–19 лет",
+        "label": "СД1 · 10–19 лет"
+      },
+      {
+        "id": "t1_ge20",
+        "type": "СД1",
+        "duration": "≥20 лет",
+        "label": "СД1 · ≥20 лет"
+      },
+      {
+        "id": "t2_lt5",
+        "type": "СД2",
+        "duration": "<5 лет",
+        "label": "СД2 · <5 лет"
+      },
+      {
+        "id": "t2_5_9",
+        "type": "СД2",
+        "duration": "5–9 лет",
+        "label": "СД2 · 5–9 лет"
+      },
+      {
+        "id": "t2_10_19",
+        "type": "СД2",
+        "duration": "10–19 лет",
+        "label": "СД2 · 10–19 лет"
+      },
+      {
+        "id": "t2_ge20",
+        "type": "СД2",
+        "duration": "≥20 лет",
+        "label": "СД2 · ≥20 лет"
+      }
+    ],
+    "interventions": [
+      {
+        "id": "prp",
+        "name": "ПРЛК",
+        "unit": "сеансов"
+      },
+      {
+        "id": "dme",
+        "name": "ИВВ при ДМО",
+        "unit": "инъекций"
+      },
+      {
+        "id": "vit",
+        "name": "Витрэктомия",
+        "unit": "операций"
+      }
+    ],
+    "profiles": [
+      {
+        "id": "expert_annual",
+        "title": "По группам из СД.docx · годовая потребность",
+        "description": "Основной групповой расчёт: годовые вероятности из присланной матрицы по типу и стажу, включая продолжающееся лечение. Там, где статьи не дают годовой стратификации, используются присланные данные. Кратность и её SD берутся из выбранных исследований с явно указанными допущениями переноса.",
+        "risks_per_1000": {
+          "t1_lt5": {
+            "prp": 1,
+            "dme": 1,
+            "vit": 0.05
+          },
+          "t1_5_9": {
+            "prp": 3,
+            "dme": 4,
+            "vit": 0.1
+          },
+          "t1_10_19": {
+            "prp": 10,
+            "dme": 15,
+            "vit": 0.4
+          },
+          "t1_ge20": {
+            "prp": 25,
+            "dme": 35,
+            "vit": 1.25
+          },
+          "t2_lt5": {
+            "prp": 1.5,
+            "dme": 6,
+            "vit": 0.1
+          },
+          "t2_5_9": {
+            "prp": 4,
+            "dme": 12,
+            "vit": 0.2
+          },
+          "t2_10_19": {
+            "prp": 9,
+            "dme": 22,
+            "vit": 0.5
+          },
+          "t2_ge20": {
+            "prp": 16,
+            "dme": 32,
+            "vit": 1
+          }
+        }
+      }
+    ],
+    "defaults": {
+      "profile": "expert_annual",
+      "populations": {
+        "t1_lt5": 1000,
+        "t1_5_9": 1000,
+        "t1_10_19": 1000,
+        "t1_ge20": 1000,
+        "t2_lt5": 1000,
+        "t2_5_9": 1000,
+        "t2_10_19": 1000,
+        "t2_ge20": 1000
+      },
+      "risks_per_1000": {
+        "t1_lt5": {
+          "prp": 1,
+          "dme": 1,
+          "vit": 0.05
+        },
+        "t1_5_9": {
+          "prp": 3,
+          "dme": 4,
+          "vit": 0.1
+        },
+        "t1_10_19": {
+          "prp": 10,
+          "dme": 15,
+          "vit": 0.4
+        },
+        "t1_ge20": {
+          "prp": 25,
+          "dme": 35,
+          "vit": 1.25
+        },
+        "t2_lt5": {
+          "prp": 1.5,
+          "dme": 6,
+          "vit": 0.1
+        },
+        "t2_5_9": {
+          "prp": 4,
+          "dme": 12,
+          "vit": 0.2
+        },
+        "t2_10_19": {
+          "prp": 9,
+          "dme": 22,
+          "vit": 0.5
+        },
+        "t2_ge20": {
+          "prp": 16,
+          "dme": 32,
+          "vit": 1
+        }
+      },
+      "coverage": 0.95,
+      "iterations": 50000,
+      "seed": 20261016,
+      "uncertainty_cv": {
+        "prp": 0.0,
+        "dme": 0.0,
+        "vit": 0.0
+      },
+      "capture": {
+        "prp": 1.0,
+        "dme": 1.0,
+        "vit": 1.0
+      },
+      "procedures": {
+        "prp": {
+          "mean": 2.42,
+          "sd": 1.51
+        },
+        "dme": {
+          "mean": 3.9,
+          "sd": 2.8,
+          "bilateral_probability": 0.2,
+          "moment_source": "IRIS2024"
+        },
+        "vit": {
+          "repeat_probability": 0.05
+        }
+      },
+      "include_comparison": false
+    },
+    "sources": [
+      {
+        "id": "LANDSCAPE2022",
+        "title": "LANDSCAPE · Франция · 2022",
+        "url": "https://doi.org/10.3390/pharmaceutics14112330",
+        "finding": "Новые ПРЛК: 3,12 на 1000 взрослых с диабетом в 2018 г.; начало лечения ДМО: 3,73 на 1000 соответствующей диабетической популяции.",
+        "limitation": "Нет восьми групп по типу и стажу. ДМО: возраст <80 лет и диагностические исключения, анти-VEGF и стероидные импланты. Перенос на все возрасты и выбранную схему инъекций — допущение."
+      },
+      {
+        "id": "SOURCE2026",
+        "title": "SOURCE · Ophthalmology Science · 2026",
+        "url": "https://doi.org/10.1016/j.xops.2026.101181",
+        "finding": "Среди получивших ПРЛК после диагноза ПДР: 2,42 сеанса на человека за первый год, SD 1,51; 13 центров США.",
+        "limitation": "Условная кратность лечения, не риск ПРЛК среди всех пациентов с диабетом. Не множитель на глаз."
+      },
+      {
+        "id": "IRIS2024",
+        "title": "IRIS · Ophthalmology Retina · 2024",
+        "url": "https://doi.org/10.1016/j.oret.2024.05.017",
+        "finding": "190 345 глаз: после начала анти-VEGF терапии ДМО в первый год 3,9 инъекции на глаз, SD 2,8.",
+        "limitation": "Реальное оказанное лечение, возможное недолечивание, цензурирование. Перенос опубликованных годовых моментов в модель курса и календарного входа — отдельное допущение."
+      },
+      {
+        "id": "Vaideanu2014",
+        "title": "Vaideanu · Ophthalmic Epidemiology · 2014",
+        "url": "https://doi.org/10.3109/09286586.2014.906628",
+        "finding": "Северо-восток Англии: в 2010 г. 1,03 первой учитываемой витрэктомии на 1000 зарегистрированных пациентов с диабетом.",
+        "limitation": "Первый глаз, старый период лечения, нет восьми групп. При расчётном полном знаменателе диабетической популяции — 0,77 на 1000, доступен альтернативный сценарий частоты."
+      },
+      {
+        "id": "DRAKO2023",
+        "title": "DRAKO · Eye · 2023",
+        "url": "https://doi.org/10.1038/s41433-023-02409-y",
+        "finding": "У ранее не леченных: 6,4 инъекции первого года, SD 2,1. Во втором году инъекции получили 73,9% наблюдаемой группы; среди получавших 3,7, SD 2,3.",
+        "limitation": "Профиль сравнения кратности, не популяционный риск. Во втором году среднее исключает нули; нельзя подставлять 3,7 всем пациентам."
+      },
+      {
+        "id": "Peto2022",
+        "title": "Peto · Diabetic Medicine · 2022",
+        "url": "https://doi.org/10.1111/dme.14746",
+        "finding": "В наблюдаемой подгруппе 7,7 инъекции на глаз первого года, SD 1,9.",
+        "limitation": "Нет минимального срока наблюдения всей когорты; моменты нельзя считать безусловными для всех вошедших. Доступен только как сценарий чувствительности кратности."
+      },
+      {
+        "id": "Ostri2014",
+        "title": "Ostri · Acta Ophthalmologica · 2014",
+        "url": "https://doi.org/10.1111/aos.12249",
+        "finding": "СД1: 3980 пациентов, кумулятивная витрэктомия 1,6% за 5 лет и 2,9% за 10 лет.",
+        "limitation": "Не превращается автоматически в годовую вероятность и не используется для восьми коэффициентов."
+      },
+      {
+        "id": "Moorfields2021",
+        "title": "Moorfields · Eye · 2021/2022",
+        "url": "https://doi.org/10.1038/s41433-021-01646-3",
+        "finding": "Пример помесячного прогноза оказанных инъекций с трендом и календарной сезонностью.",
+        "limitation": "Все показания, не только ДМО. Биологическая сезонность для Москвы в прототипе не задана."
+      },
+      {
+        "id": "DIARET_SK_2019",
+        "title": "DIARET SK · PLOS ONE · 2019",
+        "url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0223788",
+        "finding": "4014 обследованных: ПДР и ДМО совместно по СД1/СД2 и стажу. В методике показаны восемь нужных групп; 10–19 лет объединены из двух исходных строк с указанием способа расчёта.",
+        "limitation": "Распространённость при обследовании без последующего наблюдения, не годовой риск лечения. Группа ≥20 лет дополнительно набиралась. В трёх строках ДМО СД2 число случаев противоречит процентам; эти числители не используются для оценки риска или CI."
+      },
+      {
+        "id": "Stokholm2024_DiaBase_T1",
+        "title": "DiaBase · СД1 · Acta Ophthalmologica · 2024",
+        "url": "https://onlinelibrary.wiley.com/doi/full/10.1111/aos.16707",
+        "finding": "16 999 пациентов с СД1: прогрессирование в ПДР по стажу <10, 10–20 и >20 лет — 0,5%, 2,9% и 3,8% между первым и последним обследованием в период 2013–2018.",
+        "limitation": "Другие границы стажа и переменная длительность наблюдения; это не годовые ПРЛК. Пересекается с другими анализами DiaBase, поэтому выборки нельзя складывать как независимые."
+      },
+      {
+        "id": "Grauslund2023_DiaBase_T2",
+        "title": "DiaBase · СД2 · Acta Ophthalmologica · 2023",
+        "url": "https://onlinelibrary.wiley.com/doi/full/10.1111/aos.15264",
+        "finding": "153 238 пациентов с СД2: прогрессирование в ПДР по стажу <10, 10–20 и >20 лет — 0,1%, 0,4% и 1,1% между первым и последним обследованием в период 2013–2018.",
+        "limitation": "Нельзя разделить <10 лет на <5 и 5–9 по опубликованной таблице. Не годовой риск вмешательства; пересечение регистра с другими работами не увеличивает независимую выборку."
+      },
+      {
+        "id": "Kyto2011_FinnDiane",
+        "title": "FinnDiane · Diabetes Care · 2011",
+        "url": "https://doi.org/10.2337/dc10-2391",
+        "finding": "3781 пациент с СД1, 1219 первых лазерных лечений: кумулятивная частота существенно зависит от стажа и календарной эпохи диагноза.",
+        "limitation": "Лазер объединяет ПДР, макулярный отёк и тяжёлую НПДР. Кривые выживаемости не дают готовые восемь годовых вероятностей ПРЛК; требуется разделение исходов и учёт цензурирования."
+      },
+      {
+        "id": "Bek_2024",
+        "title": "Bek · Acta Ophthalmologica · 2024",
+        "url": "https://doi.org/10.1111/aos.16637",
+        "finding": "19 279 пациентов, 1665 первых лечений ДМО и 1530 первых ПРЛК. Многостадийная модель Кокса учитывает стаж, меняющиеся факторы риска и конкурирующую смерть.",
+        "limitation": "Лечение ДМО объединяет макулярный лазер и интравитреальное лечение. Тип диабета исключён авторами из-за непоследовательной регистрации; полной таблицы СД1/СД2 × стаж для ИВВ нет."
+      },
+      {
+        "id": "Nevill2021_PRP_NPDR",
+        "title": "Nevill · Eye · 2021/2022",
+        "url": "https://www.nature.com/articles/s41433-021-01471-8",
+        "finding": "Годовая частота первой ПРЛК 6,4% (95% CI 4,1–9,9%) у пациентов с уже имеющейся НПДР уровней ETDRS 47–53.",
+        "limitation": "Условный риск в группе с выраженной ретинопатией; не риск среди всех пациентов с диабетом. Подтверждает необходимость знать исходную стадию поражения."
+      },
+      {
+        "id": "Kern_open_data_2020",
+        "title": "Moorfields / Dryad · открытые данные · 2020",
+        "url": "https://datadryad.org/dataset/doi:10.5061/dryad.pzgmsbcfw",
+        "finding": "Обезличенные CSV и R-код: 1964 пациента, 2614 глаз, реальные повторные инъекции и сроки наблюдения.",
+        "limitation": "В опубликованном словаре нет типа и стажа диабета, нет знаменателя нелеченых пациентов. Полезно для кратности среди леченных, не для восьми вероятностей начала лечения."
+      }
+    ],
+    "runtime": "browser"
+  },
+  "cases": [
+    {
+      "name": "expert_fixed",
+      "payload": {
+        "profile": "expert_annual",
+        "populations": {
+          "t1_lt5": 1000,
+          "t1_5_9": 1000,
+          "t1_10_19": 1000,
+          "t1_ge20": 1000,
+          "t2_lt5": 1000,
+          "t2_5_9": 1000,
+          "t2_10_19": 1000,
+          "t2_ge20": 1000
+        },
+        "risks_per_1000": {
+          "t1_lt5": {
+            "prp": 1,
+            "dme": 1,
+            "vit": 0.05
+          },
+          "t1_5_9": {
+            "prp": 3,
+            "dme": 4,
+            "vit": 0.1
+          },
+          "t1_10_19": {
+            "prp": 10,
+            "dme": 15,
+            "vit": 0.4
+          },
+          "t1_ge20": {
+            "prp": 25,
+            "dme": 35,
+            "vit": 1.25
+          },
+          "t2_lt5": {
+            "prp": 1.5,
+            "dme": 6,
+            "vit": 0.1
+          },
+          "t2_5_9": {
+            "prp": 4,
+            "dme": 12,
+            "vit": 0.2
+          },
+          "t2_10_19": {
+            "prp": 9,
+            "dme": 22,
+            "vit": 0.5
+          },
+          "t2_ge20": {
+            "prp": 16,
+            "dme": 32,
+            "vit": 1
+          }
+        },
+        "coverage": 0.95,
+        "iterations": 2000,
+        "seed": 20261016,
+        "uncertainty_cv": {
+          "prp": 0,
+          "dme": 0,
+          "vit": 0
+        },
+        "capture": {
+          "prp": 1.0,
+          "dme": 1.0,
+          "vit": 1.0
+        },
+        "procedures": {
+          "prp": {
+            "mean": 2.42,
+            "sd": 1.51
+          },
+          "dme": {
+            "mean": 3.9,
+            "sd": 2.8,
+            "bilateral_probability": 0.2,
+            "moment_source": "IRIS2024"
+          },
+          "vit": {
+            "repeat_probability": 0.05
+          }
+        },
+        "include_comparison": false
+      },
+      "expected": {
+        "meta": {
+          "profile": "expert_annual",
+          "coverage": 0.95,
+          "iterations": 2000,
+          "seed": 20261016,
+          "population_total": 8000,
+          "elapsed_seconds": 0.269,
+          "model_version": "1.1.0",
+          "timing_label": "Годовой контингент · полный 12-месячный период",
+          "interval_kind": "marginal_central_predictive",
+          "quadrature_nodes": 96,
+          "model_name": "Стратифицированная биномиальная модель пациентов с составным распределением числа процедур"
+        },
+        "warnings": [
+          "Групповые годовые частоты из СД.docx — экспертные сценарии, а не измеренные вероятности. Исходная сводная ошибка витрэктомии не используется.",
+          "Распределения кратности первого года из исследований переносятся на всех пациентов с годовым лечением как редактируемое допущение.",
+          "Прогнозные интервалы условны на выбранные источники и допущения; модель не проверена на данных Москвы или конкретной больницы.",
+          "CV интенсивности — настраиваемая неопределённость переноса, а не оценённый по публикациям доверительный интервал.",
+          "При CV=0 показаны условные прогнозные интервалы при фиксированных рисках. Опубликованные SD индивидуального количества процедур уже включены как SD²; это не неопределённость годовой вероятности вмешательства.",
+          "Средние и SD кратности, доля второго глаза, повторной операции и направлений заданы как фиксированные сценарные параметры; неопределённость самих этих параметров исследуется их изменением, а не отдельными априорными распределениями.",
+          "Пациенты разных вмешательств могут совпадать. Общий итог уникальных людей по трём вмешательствам не рассчитывается.",
+          "Квантили оценены симуляцией; при изменении seed или числа симуляций границы могут немного изменяться. Средние и дисперсии вычисляются отдельно интегрированием модели.",
+          "Сезонные месячные коэффициенты не заданы. Результат относится ко всему 12-месячному периоду."
+        ],
+        "parameters": {
+          "profile": "expert_annual",
+          "populations": {
+            "t1_lt5": 1000,
+            "t1_5_9": 1000,
+            "t1_10_19": 1000,
+            "t1_ge20": 1000,
+            "t2_lt5": 1000,
+            "t2_5_9": 1000,
+            "t2_10_19": 1000,
+            "t2_ge20": 1000
+          },
+          "risks_per_1000": {
+            "t1_lt5": {
+              "prp": 1.0,
+              "dme": 1.0,
+              "vit": 0.05
+            },
+            "t1_5_9": {
+              "prp": 3.0,
+              "dme": 4.0,
+              "vit": 0.1
+            },
+            "t1_10_19": {
+              "prp": 10.0,
+              "dme": 15.0,
+              "vit": 0.4
+            },
+            "t1_ge20": {
+              "prp": 25.0,
+              "dme": 35.0,
+              "vit": 1.25
+            },
+            "t2_lt5": {
+              "prp": 1.5,
+              "dme": 6.0,
+              "vit": 0.1
+            },
+            "t2_5_9": {
+              "prp": 4.0,
+              "dme": 12.0,
+              "vit": 0.2
+            },
+            "t2_10_19": {
+              "prp": 9.0,
+              "dme": 22.0,
+              "vit": 0.5
+            },
+            "t2_ge20": {
+              "prp": 16.0,
+              "dme": 32.0,
+              "vit": 1.0
+            }
+          },
+          "coverage": 0.95,
+          "iterations": 2000,
+          "seed": 20261016,
+          "uncertainty_cv": {
+            "prp": 0.0,
+            "dme": 0.0,
+            "vit": 0.0
+          },
+          "capture": {
+            "prp": 1.0,
+            "dme": 1.0,
+            "vit": 1.0
+          },
+          "procedures": {
+            "prp": {
+              "mean": 2.42,
+              "sd": 1.51
+            },
+            "dme": {
+              "mean": 3.9,
+              "sd": 2.8,
+              "bilateral_probability": 0.2,
+              "moment_source": "IRIS2024"
+            },
+            "vit": {
+              "repeat_probability": 0.05
+            }
+          },
+          "include_comparison": false
+        },
+        "interventions": [
+          {
+            "id": "prp",
+            "name": "ПРЛК",
+            "unit": "сеансов",
+            "course_mean": 2.42,
+            "course_variance": 2.2801,
+            "period_mean": 2.42,
+            "period_variance": 2.2801,
+            "distribution_family": "1 + отрицательное биномиальное",
+            "truncated_mass_bound": 8.493206138382448e-14,
+            "patients": {
+              "mean": 69.5,
+              "variance": 68.40975,
+              "sd": 8.271018679703245,
+              "interval": {
+                "lower": 53,
+                "upper": 86
+              },
+              "upper_quantile": 83,
+              "zero_probability": 0.0,
+              "simulation_mean": 69.3475,
+              "simulation_variance": 67.45674375
+            },
+            "procedures": {
+              "mean": 168.19,
+              "variance": 559.1018099,
+              "sd": 23.64533378702868,
+              "interval": {
+                "lower": 123,
+                "upper": 215
+              },
+              "upper_quantile": 206,
+              "zero_probability": 0.0,
+              "simulation_mean": 167.595,
+              "simulation_variance": 557.753975
+            },
+            "groups": [
+              {
+                "id": "t1_lt5",
+                "type": "СД1",
+                "duration": "<5 лет",
+                "label": "СД1 · <5 лет",
+                "n": 1000,
+                "risk_per_1000": 1.0,
+                "patients": {
+                  "mean": 1.0,
+                  "variance": 0.9990000000000001,
+                  "sd": 0.999499874937461,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 3
+                  },
+                  "upper_quantile": 3,
+                  "zero_probability": 0.378,
+                  "simulation_mean": 0.9865,
+                  "simulation_variance": 1.0033177500000001
+                },
+                "procedures": {
+                  "mean": 2.42,
+                  "variance": 8.130643599999999,
+                  "sd": 2.851428343830509,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 9
+                  },
+                  "upper_quantile": 8,
+                  "zero_probability": 0.378,
+                  "simulation_mean": 2.358,
+                  "simulation_variance": 7.408835999999999
+                }
+              },
+              {
+                "id": "t1_5_9",
+                "type": "СД1",
+                "duration": "5–9 лет",
+                "label": "СД1 · 5–9 лет",
+                "n": 1000,
+                "risk_per_1000": 3.0,
+                "patients": {
+                  "mean": 3.0,
+                  "variance": 2.991,
+                  "sd": 1.729450779872038,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 7
+                  },
+                  "upper_quantile": 6,
+                  "zero_probability": 0.0465,
+                  "simulation_mean": 3.0715,
+                  "simulation_variance": 3.06638775
+                },
+                "procedures": {
+                  "mean": 7.26,
+                  "variance": 24.3567924,
+                  "sd": 4.935260114725464,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 19
+                  },
+                  "upper_quantile": 17,
+                  "zero_probability": 0.0465,
+                  "simulation_mean": 7.489,
+                  "simulation_variance": 25.386879
+                }
+              },
+              {
+                "id": "t1_10_19",
+                "type": "СД1",
+                "duration": "10–19 лет",
+                "label": "СД1 · 10–19 лет",
+                "n": 1000,
+                "risk_per_1000": 10.0,
+                "patients": {
+                  "mean": 10.0,
+                  "variance": 9.9,
+                  "sd": 3.146426544510455,
+                  "interval": {
+                    "lower": 4,
+                    "upper": 16
+                  },
+                  "upper_quantile": 15,
+                  "zero_probability": 0.0005,
+                  "simulation_mean": 9.9335,
+                  "simulation_variance": 9.81207775
+                },
+                "procedures": {
+                  "mean": 24.2,
+                  "variance": 80.77936,
+                  "sd": 8.987733863438548,
+                  "interval": {
+                    "lower": 9,
+                    "upper": 43
+                  },
+                  "upper_quantile": 39,
+                  "zero_probability": 0.0005,
+                  "simulation_mean": 23.9805,
+                  "simulation_variance": 80.24411975000001
+                }
+              },
+              {
+                "id": "t1_ge20",
+                "type": "СД1",
+                "duration": "≥20 лет",
+                "label": "СД1 · ≥20 лет",
+                "n": 1000,
+                "risk_per_1000": 25.0,
+                "patients": {
+                  "mean": 25.0,
+                  "variance": 24.375,
+                  "sd": 4.937104414532874,
+                  "interval": {
+                    "lower": 16,
+                    "upper": 35
+                  },
+                  "upper_quantile": 33,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 24.8275,
+                  "simulation_variance": 24.25374375
+                },
+                "procedures": {
+                  "mean": 60.5,
+                  "variance": 199.75224999999998,
+                  "sd": 14.133373624156405,
+                  "interval": {
+                    "lower": 34,
+                    "upper": 89
+                  },
+                  "upper_quantile": 84,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 60.0815,
+                  "simulation_variance": 202.99385775
+                }
+              },
+              {
+                "id": "t2_lt5",
+                "type": "СД2",
+                "duration": "<5 лет",
+                "label": "СД2 · <5 лет",
+                "n": 1000,
+                "risk_per_1000": 1.5,
+                "patients": {
+                  "mean": 1.5,
+                  "variance": 1.4977500000000001,
+                  "sd": 1.2238259680199632,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 4
+                  },
+                  "upper_quantile": 4,
+                  "zero_probability": 0.2105,
+                  "simulation_mean": 1.5455,
+                  "simulation_variance": 1.5219297499999997
+                },
+                "procedures": {
+                  "mean": 3.63,
+                  "variance": 12.191573100000001,
+                  "sd": 3.4916433237087663,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 12
+                  },
+                  "upper_quantile": 10,
+                  "zero_probability": 0.2105,
+                  "simulation_mean": 3.7455,
+                  "simulation_variance": 12.30572975
+                }
+              },
+              {
+                "id": "t2_5_9",
+                "type": "СД2",
+                "duration": "5–9 лет",
+                "label": "СД2 · 5–9 лет",
+                "n": 1000,
+                "risk_per_1000": 4.0,
+                "patients": {
+                  "mean": 4.0,
+                  "variance": 3.9839999999999995,
+                  "sd": 1.9959959919799437,
+                  "interval": {
+                    "lower": 1,
+                    "upper": 8
+                  },
+                  "upper_quantile": 7,
+                  "zero_probability": 0.0195,
+                  "simulation_mean": 3.9225,
+                  "simulation_variance": 3.9664937499999997
+                },
+                "procedures": {
+                  "mean": 9.68,
+                  "variance": 32.452297599999994,
+                  "sd": 5.696691811920318,
+                  "interval": {
+                    "lower": 1,
+                    "upper": 22
+                  },
+                  "upper_quantile": 20,
+                  "zero_probability": 0.0195,
+                  "simulation_mean": 9.4865,
+                  "simulation_variance": 32.48981775
+                }
+              },
+              {
+                "id": "t2_10_19",
+                "type": "СД2",
+                "duration": "10–19 лет",
+                "label": "СД2 · 10–19 лет",
+                "n": 1000,
+                "risk_per_1000": 9.0,
+                "patients": {
+                  "mean": 9.0,
+                  "variance": 8.919,
+                  "sd": 2.986469487538756,
+                  "interval": {
+                    "lower": 4,
+                    "upper": 15
+                  },
+                  "upper_quantile": 14,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 8.9915,
+                  "simulation_variance": 8.368427749999999
+                },
+                "procedures": {
+                  "mean": 21.78,
+                  "variance": 72.7541316,
+                  "sd": 8.529603249858694,
+                  "interval": {
+                    "lower": 7,
+                    "upper": 39
+                  },
+                  "upper_quantile": 36,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 21.699,
+                  "simulation_variance": 70.68439899999998
+                }
+              },
+              {
+                "id": "t2_ge20",
+                "type": "СД2",
+                "duration": "≥20 лет",
+                "label": "СД2 · ≥20 лет",
+                "n": 1000,
+                "risk_per_1000": 16.0,
+                "patients": {
+                  "mean": 16.0,
+                  "variance": 15.744000000000002,
+                  "sd": 3.9678709656439186,
+                  "interval": {
+                    "lower": 9,
+                    "upper": 24
+                  },
+                  "upper_quantile": 23,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 16.069,
+                  "simulation_variance": 15.779239000000002
+                },
+                "procedures": {
+                  "mean": 38.72,
+                  "variance": 128.6847616,
+                  "sd": 11.343930606275762,
+                  "interval": {
+                    "lower": 19,
+                    "upper": 62
+                  },
+                  "upper_quantile": 59,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 38.755,
+                  "simulation_variance": 129.264975
+                }
+              }
+            ],
+            "parameter_variance_patients": 0.0,
+            "event_variance_patients": 68.40975,
+            "variance_components": {
+              "patients": {
+                "event": 68.40975,
+                "parameter": 0.0
+              },
+              "procedures": {
+                "course": 158.46695,
+                "patients": 400.6348599,
+                "parameter": 0.0
+              }
+            }
+          },
+          {
+            "id": "dme",
+            "name": "ИВВ при ДМО",
+            "unit": "инъекций",
+            "course_mean": 4.68,
+            "course_variance": 11.841599999999998,
+            "period_mean": 4.68,
+            "period_variance": 11.841599999999998,
+            "distribution_family": "1 + отрицательное биномиальное",
+            "truncated_mass_bound": 6.405986852087153e-14,
+            "patients": {
+              "mean": 127.0,
+              "variance": 123.845,
+              "sd": 11.128566843938172,
+              "interval": {
+                "lower": 106,
+                "upper": 149
+              },
+              "upper_quantile": 145,
+              "zero_probability": 0.0,
+              "simulation_mean": 127.032,
+              "simulation_variance": 123.06397600000001
+            },
+            "procedures": {
+              "mean": 594.36,
+              "variance": 4216.385928,
+              "sd": 64.93370409887302,
+              "interval": {
+                "lower": 474,
+                "upper": 723
+              },
+              "upper_quantile": 704,
+              "zero_probability": 0.0,
+              "simulation_mean": 596.0255,
+              "simulation_variance": 4209.54784975
+            },
+            "groups": [
+              {
+                "id": "t1_lt5",
+                "type": "СД1",
+                "duration": "<5 лет",
+                "label": "СД1 · <5 лет",
+                "n": 1000,
+                "risk_per_1000": 1.0,
+                "patients": {
+                  "mean": 1.0,
+                  "variance": 0.9990000000000001,
+                  "sd": 0.999499874937461,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 3
+                  },
+                  "upper_quantile": 3,
+                  "zero_probability": 0.377,
+                  "simulation_mean": 1.0005,
+                  "simulation_variance": 1.0674997499999999
+                },
+                "procedures": {
+                  "mean": 4.68,
+                  "variance": 33.7220976,
+                  "sd": 5.807073066528438,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 20
+                  },
+                  "upper_quantile": 17,
+                  "zero_probability": 0.377,
+                  "simulation_mean": 4.648,
+                  "simulation_variance": 34.292096
+                }
+              },
+              {
+                "id": "t1_5_9",
+                "type": "СД1",
+                "duration": "5–9 лет",
+                "label": "СД1 · 5–9 лет",
+                "n": 1000,
+                "risk_per_1000": 4.0,
+                "patients": {
+                  "mean": 4.0,
+                  "variance": 3.9839999999999995,
+                  "sd": 1.9959959919799437,
+                  "interval": {
+                    "lower": 1,
+                    "upper": 8
+                  },
+                  "upper_quantile": 8,
+                  "zero_probability": 0.017,
+                  "simulation_mean": 4.0195,
+                  "simulation_variance": 4.06311975
+                },
+                "procedures": {
+                  "mean": 18.72,
+                  "variance": 134.62556159999997,
+                  "sd": 11.60282558689908,
+                  "interval": {
+                    "lower": 1,
+                    "upper": 47
+                  },
+                  "upper_quantile": 42,
+                  "zero_probability": 0.017,
+                  "simulation_mean": 19.043,
+                  "simulation_variance": 142.99915099999998
+                }
+              },
+              {
+                "id": "t1_10_19",
+                "type": "СД1",
+                "duration": "10–19 лет",
+                "label": "СД1 · 10–19 лет",
+                "n": 1000,
+                "risk_per_1000": 15.0,
+                "patients": {
+                  "mean": 15.0,
+                  "variance": 14.775,
+                  "sd": 3.843826218756514,
+                  "interval": {
+                    "lower": 8,
+                    "upper": 23
+                  },
+                  "upper_quantile": 21,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 15.0215,
+                  "simulation_variance": 13.73603775
+                },
+                "procedures": {
+                  "mean": 70.19999999999999,
+                  "variance": 501.2319599999999,
+                  "sd": 22.388210290239815,
+                  "interval": {
+                    "lower": 32,
+                    "upper": 116
+                  },
+                  "upper_quantile": 109,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 70.3375,
+                  "simulation_variance": 475.39859375
+                }
+              },
+              {
+                "id": "t1_ge20",
+                "type": "СД1",
+                "duration": "≥20 лет",
+                "label": "СД1 · ≥20 лет",
+                "n": 1000,
+                "risk_per_1000": 35.0,
+                "patients": {
+                  "mean": 35.0,
+                  "variance": 33.775,
+                  "sd": 5.811626278418116,
+                  "interval": {
+                    "lower": 24,
+                    "upper": 46
+                  },
+                  "upper_quantile": 44,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 34.8895,
+                  "simulation_variance": 32.92728974999999
+                },
+                "procedures": {
+                  "mean": 163.79999999999998,
+                  "variance": 1154.2095599999998,
+                  "sd": 33.97365979696623,
+                  "interval": {
+                    "lower": 103,
+                    "upper": 231
+                  },
+                  "upper_quantile": 222,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 163.395,
+                  "simulation_variance": 1127.571975
+                }
+              },
+              {
+                "id": "t2_lt5",
+                "type": "СД2",
+                "duration": "<5 лет",
+                "label": "СД2 · <5 лет",
+                "n": 1000,
+                "risk_per_1000": 6.0,
+                "patients": {
+                  "mean": 6.0,
+                  "variance": 5.9639999999999995,
+                  "sd": 2.4421302176583457,
+                  "interval": {
+                    "lower": 2,
+                    "upper": 11
+                  },
+                  "upper_quantile": 10,
+                  "zero_probability": 0.0025,
+                  "simulation_mean": 5.9315,
+                  "simulation_variance": 6.021807750000001
+                },
+                "procedures": {
+                  "mean": 28.08,
+                  "variance": 201.67551359999993,
+                  "sd": 14.201250423818317,
+                  "interval": {
+                    "lower": 5,
+                    "upper": 62
+                  },
+                  "upper_quantile": 55,
+                  "zero_probability": 0.0025,
+                  "simulation_mean": 27.9725,
+                  "simulation_variance": 205.62174375
+                }
+              },
+              {
+                "id": "t2_5_9",
+                "type": "СД2",
+                "duration": "5–9 лет",
+                "label": "СД2 · 5–9 лет",
+                "n": 1000,
+                "risk_per_1000": 12.0,
+                "patients": {
+                  "mean": 12.0,
+                  "variance": 11.856,
+                  "sd": 3.443254274665175,
+                  "interval": {
+                    "lower": 6,
+                    "upper": 19
+                  },
+                  "upper_quantile": 18,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 12.0635,
+                  "simulation_variance": 11.782467750000002
+                },
+                "procedures": {
+                  "mean": 56.16,
+                  "variance": 401.77405439999995,
+                  "sd": 20.0443022926716,
+                  "interval": {
+                    "lower": 23,
+                    "upper": 100
+                  },
+                  "upper_quantile": 90,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 56.654,
+                  "simulation_variance": 397.763284
+                }
+              },
+              {
+                "id": "t2_10_19",
+                "type": "СД2",
+                "duration": "10–19 лет",
+                "label": "СД2 · 10–19 лет",
+                "n": 1000,
+                "risk_per_1000": 22.0,
+                "patients": {
+                  "mean": 22.0,
+                  "variance": 21.516,
+                  "sd": 4.638534251247909,
+                  "interval": {
+                    "lower": 14,
+                    "upper": 31
+                  },
+                  "upper_quantile": 29,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 21.9665,
+                  "simulation_variance": 20.38837775
+                },
+                "procedures": {
+                  "mean": 102.96,
+                  "variance": 731.7672383999998,
+                  "sd": 27.05119661678573,
+                  "interval": {
+                    "lower": 56,
+                    "upper": 160
+                  },
+                  "upper_quantile": 150,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 103.3545,
+                  "simulation_variance": 717.9628297500001
+                }
+              },
+              {
+                "id": "t2_ge20",
+                "type": "СД2",
+                "duration": "≥20 лет",
+                "label": "СД2 · ≥20 лет",
+                "n": 1000,
+                "risk_per_1000": 32.0,
+                "patients": {
+                  "mean": 32.0,
+                  "variance": 30.976,
+                  "sd": 5.5656086818963475,
+                  "interval": {
+                    "lower": 22,
+                    "upper": 43
+                  },
+                  "upper_quantile": 41,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 32.1395,
+                  "simulation_variance": 30.66303975
+                },
+                "procedures": {
+                  "mean": 149.76,
+                  "variance": 1057.3799423999997,
+                  "sd": 32.517379082576745,
+                  "interval": {
+                    "lower": 92,
+                    "upper": 217
+                  },
+                  "upper_quantile": 206,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 150.621,
+                  "simulation_variance": 1038.9033590000001
+                }
+              }
+            ],
+            "parameter_variance_patients": 0.0,
+            "event_variance_patients": 123.845,
+            "variance_components": {
+              "patients": {
+                "event": 123.845,
+                "parameter": 0.0
+              },
+              "procedures": {
+                "course": 1503.8831999999998,
+                "patients": 2712.5027279999995,
+                "parameter": 0.0
+              }
+            }
+          },
+          {
+            "id": "vit",
+            "name": "Витрэктомия",
+            "unit": "операций",
+            "course_mean": 1.05,
+            "course_variance": 0.0475,
+            "period_mean": 1.05,
+            "period_variance": 0.0475,
+            "distribution_family": "1 + Бернулли дополнительной операции",
+            "truncated_mass_bound": 0.0,
+            "patients": {
+              "mean": 3.5999999999999996,
+              "variance": 3.596965,
+              "sd": 1.896566634737625,
+              "interval": {
+                "lower": 1,
+                "upper": 8
+              },
+              "upper_quantile": 7,
+              "zero_probability": 0.022,
+              "simulation_mean": 3.565,
+              "simulation_variance": 3.3247750000000003
+            },
+            "procedures": {
+              "mean": 3.78,
+              "variance": 4.1366539125,
+              "sd": 2.0338765725825154,
+              "interval": {
+                "lower": 1,
+                "upper": 8
+              },
+              "upper_quantile": 7,
+              "zero_probability": 0.022,
+              "simulation_mean": 3.7395,
+              "simulation_variance": 3.82163975
+            },
+            "groups": [
+              {
+                "id": "t1_lt5",
+                "type": "СД1",
+                "duration": "<5 лет",
+                "label": "СД1 · <5 лет",
+                "n": 1000,
+                "risk_per_1000": 0.05,
+                "patients": {
+                  "mean": 0.05,
+                  "variance": 0.0499975,
+                  "sd": 0.22360120751015636,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 1
+                  },
+                  "upper_quantile": 0,
+                  "zero_probability": 0.9525,
+                  "simulation_mean": 0.0485,
+                  "simulation_variance": 0.04814774999999999
+                },
+                "procedures": {
+                  "mean": 0.052500000000000005,
+                  "variance": 0.05749724375000001,
+                  "sd": 0.23978582891822445,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 1
+                  },
+                  "upper_quantile": 0,
+                  "zero_probability": 0.9525,
+                  "simulation_mean": 0.0495,
+                  "simulation_variance": 0.05104974999999999
+                }
+              },
+              {
+                "id": "t1_5_9",
+                "type": "СД1",
+                "duration": "5–9 лет",
+                "label": "СД1 · 5–9 лет",
+                "n": 1000,
+                "risk_per_1000": 0.1,
+                "patients": {
+                  "mean": 0.1,
+                  "variance": 0.09999000000000001,
+                  "sd": 0.3162119542332326,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 1
+                  },
+                  "upper_quantile": 1,
+                  "zero_probability": 0.894,
+                  "simulation_mean": 0.1115,
+                  "simulation_variance": 0.11006774999999999
+                },
+                "procedures": {
+                  "mean": 0.10500000000000001,
+                  "variance": 0.11498897500000002,
+                  "sd": 0.3391002432909773,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 1
+                  },
+                  "upper_quantile": 1,
+                  "zero_probability": 0.894,
+                  "simulation_mean": 0.116,
+                  "simulation_variance": 0.12354400000000001
+                }
+              },
+              {
+                "id": "t1_10_19",
+                "type": "СД1",
+                "duration": "10–19 лет",
+                "label": "СД1 · 10–19 лет",
+                "n": 1000,
+                "risk_per_1000": 0.4,
+                "patients": {
+                  "mean": 0.4,
+                  "variance": 0.39984000000000003,
+                  "sd": 0.6323290282756281,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 2
+                  },
+                  "upper_quantile": 1,
+                  "zero_probability": 0.673,
+                  "simulation_mean": 0.386,
+                  "simulation_variance": 0.376004
+                },
+                "procedures": {
+                  "mean": 0.42000000000000004,
+                  "variance": 0.45982360000000005,
+                  "sd": 0.6781029420375642,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 2
+                  },
+                  "upper_quantile": 2,
+                  "zero_probability": 0.673,
+                  "simulation_mean": 0.4035,
+                  "simulation_variance": 0.4216877499999999
+                }
+              },
+              {
+                "id": "t1_ge20",
+                "type": "СД1",
+                "duration": "≥20 лет",
+                "label": "СД1 · ≥20 лет",
+                "n": 1000,
+                "risk_per_1000": 1.25,
+                "patients": {
+                  "mean": 1.25,
+                  "variance": 1.2484375,
+                  "sd": 1.1173349990043273,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 4
+                  },
+                  "upper_quantile": 3,
+                  "zero_probability": 0.291,
+                  "simulation_mean": 1.223,
+                  "simulation_variance": 1.176271
+                },
+                "procedures": {
+                  "mean": 1.3125,
+                  "variance": 1.43577734375,
+                  "sd": 1.1982392681555718,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 4
+                  },
+                  "upper_quantile": 3,
+                  "zero_probability": 0.291,
+                  "simulation_mean": 1.2985,
+                  "simulation_variance": 1.40339775
+                }
+              },
+              {
+                "id": "t2_lt5",
+                "type": "СД2",
+                "duration": "<5 лет",
+                "label": "СД2 · <5 лет",
+                "n": 1000,
+                "risk_per_1000": 0.1,
+                "patients": {
+                  "mean": 0.1,
+                  "variance": 0.09999000000000001,
+                  "sd": 0.3162119542332326,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 1
+                  },
+                  "upper_quantile": 1,
+                  "zero_probability": 0.911,
+                  "simulation_mean": 0.094,
+                  "simulation_variance": 0.09616399999999999
+                },
+                "procedures": {
+                  "mean": 0.10500000000000001,
+                  "variance": 0.11498897500000002,
+                  "sd": 0.3391002432909773,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 1
+                  },
+                  "upper_quantile": 1,
+                  "zero_probability": 0.911,
+                  "simulation_mean": 0.1,
+                  "simulation_variance": 0.11399999999999999
+                }
+              },
+              {
+                "id": "t2_5_9",
+                "type": "СД2",
+                "duration": "5–9 лет",
+                "label": "СД2 · 5–9 лет",
+                "n": 1000,
+                "risk_per_1000": 0.2,
+                "patients": {
+                  "mean": 0.2,
+                  "variance": 0.19996,
+                  "sd": 0.4471688719041163,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 1
+                  },
+                  "upper_quantile": 1,
+                  "zero_probability": 0.817,
+                  "simulation_mean": 0.1955,
+                  "simulation_variance": 0.18327975000000002
+                },
+                "procedures": {
+                  "mean": 0.21000000000000002,
+                  "variance": 0.22995590000000002,
+                  "sd": 0.47953717269884305,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 1
+                  },
+                  "upper_quantile": 1,
+                  "zero_probability": 0.817,
+                  "simulation_mean": 0.206,
+                  "simulation_variance": 0.21456400000000003
+                }
+              },
+              {
+                "id": "t2_10_19",
+                "type": "СД2",
+                "duration": "10–19 лет",
+                "label": "СД2 · 10–19 лет",
+                "n": 1000,
+                "risk_per_1000": 0.5,
+                "patients": {
+                  "mean": 0.5,
+                  "variance": 0.4997500000000001,
+                  "sd": 0.706929982388638,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 2
+                  },
+                  "upper_quantile": 2,
+                  "zero_probability": 0.6015,
+                  "simulation_mean": 0.5165,
+                  "simulation_variance": 0.52772775
+                },
+                "procedures": {
+                  "mean": 0.525,
+                  "variance": 0.5747243750000002,
+                  "sd": 0.7581057808775766,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 2
+                  },
+                  "upper_quantile": 2,
+                  "zero_probability": 0.6015,
+                  "simulation_mean": 0.539,
+                  "simulation_variance": 0.588479
+                }
+              },
+              {
+                "id": "t2_ge20",
+                "type": "СД2",
+                "duration": "≥20 лет",
+                "label": "СД2 · ≥20 лет",
+                "n": 1000,
+                "risk_per_1000": 1.0,
+                "patients": {
+                  "mean": 1.0,
+                  "variance": 0.9990000000000001,
+                  "sd": 0.999499874937461,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 3
+                  },
+                  "upper_quantile": 3,
+                  "zero_probability": 0.368,
+                  "simulation_mean": 0.99,
+                  "simulation_variance": 0.9678999999999999
+                },
+                "procedures": {
+                  "mean": 1.05,
+                  "variance": 1.1488975000000001,
+                  "sd": 1.0718663629389626,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 3
+                  },
+                  "upper_quantile": 3,
+                  "zero_probability": 0.368,
+                  "simulation_mean": 1.027,
+                  "simulation_variance": 1.0692709999999996
+                }
+              }
+            ],
+            "parameter_variance_patients": 0.0,
+            "event_variance_patients": 3.596965,
+            "variance_components": {
+              "patients": {
+                "event": 3.596965,
+                "parameter": 0.0
+              },
+              "procedures": {
+                "course": 0.17099999999999999,
+                "patients": 3.9656539125,
+                "parameter": 0.0
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "shared_cv",
+      "payload": {
+        "profile": "expert_annual",
+        "populations": {
+          "t1_lt5": 1000,
+          "t1_5_9": 1000,
+          "t1_10_19": 1000,
+          "t1_ge20": 1000,
+          "t2_lt5": 1000,
+          "t2_5_9": 1000,
+          "t2_10_19": 1000,
+          "t2_ge20": 1000
+        },
+        "risks_per_1000": {
+          "t1_lt5": {
+            "prp": 1,
+            "dme": 1,
+            "vit": 0.05
+          },
+          "t1_5_9": {
+            "prp": 3,
+            "dme": 4,
+            "vit": 0.1
+          },
+          "t1_10_19": {
+            "prp": 10,
+            "dme": 15,
+            "vit": 0.4
+          },
+          "t1_ge20": {
+            "prp": 25,
+            "dme": 35,
+            "vit": 1.25
+          },
+          "t2_lt5": {
+            "prp": 1.5,
+            "dme": 6,
+            "vit": 0.1
+          },
+          "t2_5_9": {
+            "prp": 4,
+            "dme": 12,
+            "vit": 0.2
+          },
+          "t2_10_19": {
+            "prp": 9,
+            "dme": 22,
+            "vit": 0.5
+          },
+          "t2_ge20": {
+            "prp": 16,
+            "dme": 32,
+            "vit": 1
+          }
+        },
+        "coverage": 0.95,
+        "iterations": 2000,
+        "seed": 20261016,
+        "uncertainty_cv": {
+          "prp": 0.5,
+          "dme": 0.5,
+          "vit": 0.5
+        },
+        "capture": {
+          "prp": 1.0,
+          "dme": 1.0,
+          "vit": 1.0
+        },
+        "procedures": {
+          "prp": {
+            "mean": 2.42,
+            "sd": 1.51
+          },
+          "dme": {
+            "mean": 3.9,
+            "sd": 2.8,
+            "bilateral_probability": 0.2,
+            "moment_source": "IRIS2024"
+          },
+          "vit": {
+            "repeat_probability": 0.05
+          }
+        },
+        "include_comparison": false
+      },
+      "expected": {
+        "meta": {
+          "profile": "expert_annual",
+          "coverage": 0.95,
+          "iterations": 2000,
+          "seed": 20261016,
+          "population_total": 8000,
+          "elapsed_seconds": 0.029,
+          "model_version": "1.1.0",
+          "timing_label": "Годовой контингент · полный 12-месячный период",
+          "interval_kind": "marginal_central_predictive",
+          "quadrature_nodes": 96,
+          "model_name": "Стратифицированная биномиальная модель пациентов с составным распределением числа процедур"
+        },
+        "warnings": [
+          "Групповые годовые частоты из СД.docx — экспертные сценарии, а не измеренные вероятности. Исходная сводная ошибка витрэктомии не используется.",
+          "Распределения кратности первого года из исследований переносятся на всех пациентов с годовым лечением как редактируемое допущение.",
+          "Прогнозные интервалы условны на выбранные источники и допущения; модель не проверена на данных Москвы или конкретной больницы.",
+          "CV интенсивности — настраиваемая неопределённость переноса, а не оценённый по публикациям доверительный интервал.",
+          "При CV=0 показаны условные прогнозные интервалы при фиксированных рисках. Опубликованные SD индивидуального количества процедур уже включены как SD²; это не неопределённость годовой вероятности вмешательства.",
+          "Средние и SD кратности, доля второго глаза, повторной операции и направлений заданы как фиксированные сценарные параметры; неопределённость самих этих параметров исследуется их изменением, а не отдельными априорными распределениями.",
+          "Пациенты разных вмешательств могут совпадать. Общий итог уникальных людей по трём вмешательствам не рассчитывается.",
+          "Квантили оценены симуляцией; при изменении seed или числа симуляций границы могут немного изменяться. Средние и дисперсии вычисляются отдельно интегрированием модели.",
+          "Сезонные месячные коэффициенты не заданы. Результат относится ко всему 12-месячному периоду."
+        ],
+        "parameters": {
+          "profile": "expert_annual",
+          "populations": {
+            "t1_lt5": 1000,
+            "t1_5_9": 1000,
+            "t1_10_19": 1000,
+            "t1_ge20": 1000,
+            "t2_lt5": 1000,
+            "t2_5_9": 1000,
+            "t2_10_19": 1000,
+            "t2_ge20": 1000
+          },
+          "risks_per_1000": {
+            "t1_lt5": {
+              "prp": 1.0,
+              "dme": 1.0,
+              "vit": 0.05
+            },
+            "t1_5_9": {
+              "prp": 3.0,
+              "dme": 4.0,
+              "vit": 0.1
+            },
+            "t1_10_19": {
+              "prp": 10.0,
+              "dme": 15.0,
+              "vit": 0.4
+            },
+            "t1_ge20": {
+              "prp": 25.0,
+              "dme": 35.0,
+              "vit": 1.25
+            },
+            "t2_lt5": {
+              "prp": 1.5,
+              "dme": 6.0,
+              "vit": 0.1
+            },
+            "t2_5_9": {
+              "prp": 4.0,
+              "dme": 12.0,
+              "vit": 0.2
+            },
+            "t2_10_19": {
+              "prp": 9.0,
+              "dme": 22.0,
+              "vit": 0.5
+            },
+            "t2_ge20": {
+              "prp": 16.0,
+              "dme": 32.0,
+              "vit": 1.0
+            }
+          },
+          "coverage": 0.95,
+          "iterations": 2000,
+          "seed": 20261016,
+          "uncertainty_cv": {
+            "prp": 0.5,
+            "dme": 0.5,
+            "vit": 0.5
+          },
+          "capture": {
+            "prp": 1.0,
+            "dme": 1.0,
+            "vit": 1.0
+          },
+          "procedures": {
+            "prp": {
+              "mean": 2.42,
+              "sd": 1.51
+            },
+            "dme": {
+              "mean": 3.9,
+              "sd": 2.8,
+              "bilateral_probability": 0.2,
+              "moment_source": "IRIS2024"
+            },
+            "vit": {
+              "repeat_probability": 0.05
+            }
+          },
+          "include_comparison": false
+        },
+        "interventions": [
+          {
+            "id": "prp",
+            "name": "ПРЛК",
+            "unit": "сеансов",
+            "course_mean": 2.42,
+            "course_variance": 2.2801,
+            "period_mean": 2.42,
+            "period_variance": 2.2801,
+            "distribution_family": "1 + отрицательное биномиальное",
+            "truncated_mass_bound": 8.493206138382448e-14,
+            "patients": {
+              "mean": 69.5,
+              "variance": 1246.3239934664257,
+              "sd": 35.30331419946894,
+              "interval": {
+                "lower": 23,
+                "upper": 165
+              },
+              "upper_quantile": 138,
+              "zero_probability": 0.0,
+              "simulation_mean": 69.1375,
+              "simulation_variance": 1294.44859375
+            },
+            "procedures": {
+              "mean": 168.19,
+              "variance": 7457.438785336775,
+              "sd": 86.35646348326671,
+              "interval": {
+                "lower": 52,
+                "upper": 406
+              },
+              "upper_quantile": 337,
+              "zero_probability": 0.0,
+              "simulation_mean": 167.3985,
+              "simulation_variance": 7737.10169775
+            },
+            "groups": [
+              {
+                "id": "t1_lt5",
+                "type": "СД1",
+                "duration": "<5 лет",
+                "label": "СД1 · <5 лет",
+                "n": 1000,
+                "risk_per_1000": 1.0,
+                "patients": {
+                  "mean": 1.0,
+                  "variance": 1.2483599560630758,
+                  "sd": 1.1173002980681048,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 4
+                  },
+                  "upper_quantile": 3,
+                  "zero_probability": 0.397,
+                  "simulation_mean": 1.039,
+                  "simulation_variance": 1.328479
+                },
+                "procedures": {
+                  "mean": 2.42,
+                  "variance": 9.590995246687797,
+                  "sd": 3.0969332002301564,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 11
+                  },
+                  "upper_quantile": 9,
+                  "zero_probability": 0.397,
+                  "simulation_mean": 2.479,
+                  "simulation_variance": 9.485559
+                }
+              },
+              {
+                "id": "t1_5_9",
+                "type": "СД1",
+                "duration": "5–9 лет",
+                "label": "СД1 · 5–9 лет",
+                "n": 1000,
+                "risk_per_1000": 3.0,
+                "patients": {
+                  "mean": 3.0,
+                  "variance": 5.2282290802206015,
+                  "sd": 2.2865321078481715,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 9
+                  },
+                  "upper_quantile": 7,
+                  "zero_probability": 0.1075,
+                  "simulation_mean": 2.93,
+                  "simulation_variance": 5.3611
+                },
+                "procedures": {
+                  "mean": 7.26,
+                  "variance": 37.45890078540393,
+                  "sd": 6.12036770017978,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 23
+                  },
+                  "upper_quantile": 19,
+                  "zero_probability": 0.1075,
+                  "simulation_mean": 7.1105,
+                  "simulation_variance": 39.45228975
+                }
+              },
+              {
+                "id": "t1_10_19",
+                "type": "СД1",
+                "duration": "10–19 лет",
+                "label": "СД1 · 10–19 лет",
+                "n": 1000,
+                "risk_per_1000": 10.0,
+                "patients": {
+                  "mean": 10.0,
+                  "variance": 34.48666053824381,
+                  "sd": 5.872534422056955,
+                  "interval": {
+                    "lower": 2,
+                    "upper": 25
+                  },
+                  "upper_quantile": 21,
+                  "zero_probability": 0.003,
+                  "simulation_mean": 9.853,
+                  "simulation_variance": 34.931391000000005
+                },
+                "procedures": {
+                  "mean": 24.2,
+                  "variance": 224.76867877617104,
+                  "sd": 14.992287309685972,
+                  "interval": {
+                    "lower": 3,
+                    "upper": 61
+                  },
+                  "upper_quantile": 52,
+                  "zero_probability": 0.003,
+                  "simulation_mean": 23.919,
+                  "simulation_variance": 229.823439
+                }
+              },
+              {
+                "id": "t1_ge20",
+                "type": "СД1",
+                "duration": "≥20 лет",
+                "label": "СД1 · ≥20 лет",
+                "n": 1000,
+                "risk_per_1000": 25.0,
+                "patients": {
+                  "mean": 25.0,
+                  "variance": 174.44475336587107,
+                  "sd": 13.20775353214433,
+                  "interval": {
+                    "lower": 7,
+                    "upper": 59
+                  },
+                  "upper_quantile": 50,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 24.8695,
+                  "simulation_variance": 180.90046974999998
+                },
+                "procedures": {
+                  "mean": 60.5,
+                  "variance": 1078.6207536118873,
+                  "sd": 32.84236218075502,
+                  "interval": {
+                    "lower": 17,
+                    "upper": 148
+                  },
+                  "upper_quantile": 123,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 60.0685,
+                  "simulation_variance": 1100.63280775
+                }
+              },
+              {
+                "id": "t2_lt5",
+                "type": "СД2",
+                "duration": "<5 лет",
+                "label": "СД2 · <5 лет",
+                "n": 1000,
+                "risk_per_1000": 1.5,
+                "patients": {
+                  "mean": 1.5,
+                  "variance": 2.0583714228090173,
+                  "sd": 1.4347025555176993,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 5
+                  },
+                  "upper_quantile": 4,
+                  "zero_probability": 0.283,
+                  "simulation_mean": 1.47,
+                  "simulation_variance": 2.0431
+                },
+                "procedures": {
+                  "mean": 3.63,
+                  "variance": 15.474796400538727,
+                  "sd": 3.933801774433827,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 14
+                  },
+                  "upper_quantile": 11,
+                  "zero_probability": 0.283,
+                  "simulation_mean": 3.5675,
+                  "simulation_variance": 15.259443750000003
+                }
+              },
+              {
+                "id": "t2_5_9",
+                "type": "СД2",
+                "duration": "5–9 лет",
+                "label": "СД2 · 5–9 лет",
+                "n": 1000,
+                "risk_per_1000": 4.0,
+                "patients": {
+                  "mean": 4.0,
+                  "variance": 7.955073670964078,
+                  "sd": 2.820474015296733,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 11
+                  },
+                  "upper_quantile": 10,
+                  "zero_probability": 0.0475,
+                  "simulation_mean": 4.026,
+                  "simulation_variance": 8.139324
+                },
+                "procedures": {
+                  "mean": 9.68,
+                  "variance": 55.70849344663402,
+                  "sd": 7.463812259605277,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 29
+                  },
+                  "upper_quantile": 24,
+                  "zero_probability": 0.0475,
+                  "simulation_mean": 9.724,
+                  "simulation_variance": 56.69182399999999
+                }
+              },
+              {
+                "id": "t2_10_19",
+                "type": "СД2",
+                "duration": "10–19 лет",
+                "label": "СД2 · 10–19 лет",
+                "n": 1000,
+                "risk_per_1000": 9.0,
+                "patients": {
+                  "mean": 9.0,
+                  "variance": 28.8655130789193,
+                  "sd": 5.372663499505557,
+                  "interval": {
+                    "lower": 2,
+                    "upper": 22
+                  },
+                  "upper_quantile": 19,
+                  "zero_probability": 0.0035,
+                  "simulation_mean": 8.9455,
+                  "simulation_variance": 29.50552975
+                },
+                "procedures": {
+                  "mean": 21.78,
+                  "variance": 189.56889079538297,
+                  "sd": 13.768401896929904,
+                  "interval": {
+                    "lower": 3,
+                    "upper": 56
+                  },
+                  "upper_quantile": 48,
+                  "zero_probability": 0.0035,
+                  "simulation_mean": 21.6115,
+                  "simulation_variance": 196.28056775
+                }
+              },
+              {
+                "id": "t2_ge20",
+                "type": "СД2",
+                "duration": "≥20 лет",
+                "label": "СД2 · ≥20 лет",
+                "n": 1000,
+                "risk_per_1000": 16.0,
+                "patients": {
+                  "mean": 16.0,
+                  "variance": 78.09397763810084,
+                  "sd": 8.837079700789218,
+                  "interval": {
+                    "lower": 4,
+                    "upper": 38
+                  },
+                  "upper_quantile": 32,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 16.0045,
+                  "simulation_variance": 78.36847974999999
+                },
+                "procedures": {
+                  "mean": 38.72,
+                  "variance": 493.83117063977375,
+                  "sd": 22.222312450322846,
+                  "interval": {
+                    "lower": 9,
+                    "upper": 98
+                  },
+                  "upper_quantile": 81,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 38.9185,
+                  "simulation_variance": 489.11485774999994
+                }
+              }
+            ],
+            "parameter_variance_patients": 1178.1784788906011,
+            "event_variance_patients": 68.14551457582463,
+            "variance_components": {
+              "patients": {
+                "event": 68.14551457582463,
+                "parameter": 1178.1784788906011
+              },
+              "procedures": {
+                "course": 158.46695,
+                "patients": 399.08739156185936,
+                "parameter": 6899.884443774917
+              }
+            }
+          },
+          {
+            "id": "dme",
+            "name": "ИВВ при ДМО",
+            "unit": "инъекций",
+            "course_mean": 4.68,
+            "course_variance": 11.841599999999998,
+            "period_mean": 4.68,
+            "period_variance": 11.841599999999998,
+            "distribution_family": "1 + отрицательное биномиальное",
+            "truncated_mass_bound": 6.405986852087153e-14,
+            "patients": {
+              "mean": 127.0,
+              "variance": 4000.6388173673777,
+              "sd": 63.250603296469656,
+              "interval": {
+                "lower": 44,
+                "upper": 286
+              },
+              "upper_quantile": 249,
+              "zero_probability": 0.0,
+              "simulation_mean": 128.1455,
+              "simulation_variance": 3897.96532975
+            },
+            "procedures": {
+              "mean": 594.36,
+              "variance": 89127.47483350724,
+              "sd": 298.54224966243424,
+              "interval": {
+                "lower": 205,
+                "upper": 1341
+              },
+              "upper_quantile": 1179,
+              "zero_probability": 0.0,
+              "simulation_mean": 601.4035,
+              "simulation_variance": 86702.46268775001
+            },
+            "groups": [
+              {
+                "id": "t1_lt5",
+                "type": "СД1",
+                "duration": "<5 лет",
+                "label": "СД1 · <5 лет",
+                "n": 1000,
+                "risk_per_1000": 1.0,
+                "patients": {
+                  "mean": 1.0,
+                  "variance": 1.2483599560630758,
+                  "sd": 1.1173002980681048,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 4
+                  },
+                  "upper_quantile": 3,
+                  "zero_probability": 0.4035,
+                  "simulation_mean": 1.016,
+                  "simulation_variance": 1.2937440000000002
+                },
+                "procedures": {
+                  "mean": 4.68,
+                  "variance": 39.18367910167591,
+                  "sd": 6.259686821373407,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 21
+                  },
+                  "upper_quantile": 17,
+                  "zero_probability": 0.4035,
+                  "simulation_mean": 4.7585,
+                  "simulation_variance": 40.287177750000005
+                }
+              },
+              {
+                "id": "t1_5_9",
+                "type": "СД1",
+                "duration": "5–9 лет",
+                "label": "СД1 · 5–9 лет",
+                "n": 1000,
+                "risk_per_1000": 4.0,
+                "patients": {
+                  "mean": 4.0,
+                  "variance": 7.955073670964078,
+                  "sd": 2.820474015296733,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 11
+                  },
+                  "upper_quantile": 9,
+                  "zero_probability": 0.0485,
+                  "simulation_mean": 4.057,
+                  "simulation_variance": 7.722751000000001
+                },
+                "procedures": {
+                  "mean": 18.72,
+                  "variance": 221.6016055709236,
+                  "sd": 14.886289180683129,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 54
+                  },
+                  "upper_quantile": 47,
+                  "zero_probability": 0.0485,
+                  "simulation_mean": 19.2175,
+                  "simulation_variance": 216.79619375000001
+                }
+              },
+              {
+                "id": "t1_10_19",
+                "type": "СД1",
+                "duration": "10–19 лет",
+                "label": "СД1 · 10–19 лет",
+                "n": 1000,
+                "risk_per_1000": 15.0,
+                "patients": {
+                  "mean": 15.0,
+                  "variance": 69.66127565527701,
+                  "sd": 8.3463330663997,
+                  "interval": {
+                    "lower": 4,
+                    "upper": 36
+                  },
+                  "upper_quantile": 32,
+                  "zero_probability": 0.0005,
+                  "simulation_mean": 15.061,
+                  "simulation_variance": 67.95427900000001
+                },
+                "procedures": {
+                  "mean": 70.19999999999999,
+                  "variance": 1703.373123912139,
+                  "sd": 41.271941121204115,
+                  "interval": {
+                    "lower": 14,
+                    "upper": 174
+                  },
+                  "upper_quantile": 151,
+                  "zero_probability": 0.0005,
+                  "simulation_mean": 70.63,
+                  "simulation_variance": 1650.9281
+                }
+              },
+              {
+                "id": "t1_ge20",
+                "type": "СД1",
+                "duration": "≥20 лет",
+                "label": "СД1 · ≥20 лет",
+                "n": 1000,
+                "risk_per_1000": 35.0,
+                "patients": {
+                  "mean": 35.0,
+                  "variance": 323.2679662782824,
+                  "sd": 17.97965423133277,
+                  "interval": {
+                    "lower": 11,
+                    "upper": 79
+                  },
+                  "upper_quantile": 69,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 35.299,
+                  "simulation_variance": 310.57159900000005
+                },
+                "procedures": {
+                  "mean": 163.79999999999998,
+                  "variance": 7494.800304613453,
+                  "sd": 86.57251471808736,
+                  "interval": {
+                    "lower": 47,
+                    "upper": 388
+                  },
+                  "upper_quantile": 327,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 165.839,
+                  "simulation_variance": 7347.709079
+                }
+              },
+              {
+                "id": "t2_lt5",
+                "type": "СД2",
+                "duration": "<5 лет",
+                "label": "СД2 · <5 лет",
+                "n": 1000,
+                "risk_per_1000": 6.0,
+                "patients": {
+                  "mean": 6.0,
+                  "variance": 14.870955498873574,
+                  "sd": 3.856287787351143,
+                  "interval": {
+                    "lower": 1,
+                    "upper": 15
+                  },
+                  "upper_quantile": 13,
+                  "zero_probability": 0.0175,
+                  "simulation_mean": 5.996,
+                  "simulation_variance": 14.269984000000001
+                },
+                "procedures": {
+                  "mean": 28.08,
+                  "variance": 396.75921571852854,
+                  "sd": 19.918815620375838,
+                  "interval": {
+                    "lower": 1,
+                    "upper": 76
+                  },
+                  "upper_quantile": 64,
+                  "zero_probability": 0.0175,
+                  "simulation_mean": 28.1435,
+                  "simulation_variance": 377.93290775
+                }
+              },
+              {
+                "id": "t2_5_9",
+                "type": "СД2",
+                "duration": "5–9 лет",
+                "label": "СД2 · 5–9 лет",
+                "n": 1000,
+                "risk_per_1000": 12.0,
+                "patients": {
+                  "mean": 12.0,
+                  "variance": 47.14959996819154,
+                  "sd": 6.86655663110642,
+                  "interval": {
+                    "lower": 3,
+                    "upper": 29
+                  },
+                  "upper_quantile": 25,
+                  "zero_probability": 0.001,
+                  "simulation_mean": 12.1355,
+                  "simulation_variance": 48.088139749999996
+                },
+                "procedures": {
+                  "mean": 56.16,
+                  "variance": 1174.7885983433182,
+                  "sd": 34.275189253209355,
+                  "interval": {
+                    "lower": 10,
+                    "upper": 141
+                  },
+                  "upper_quantile": 120,
+                  "zero_probability": 0.001,
+                  "simulation_mean": 57.108,
+                  "simulation_variance": 1187.0853359999999
+                }
+              },
+              {
+                "id": "t2_10_19",
+                "type": "СД2",
+                "duration": "10–19 лет",
+                "label": "СД2 · 10–19 лет",
+                "n": 1000,
+                "risk_per_1000": 22.0,
+                "patients": {
+                  "mean": 22.0,
+                  "variance": 138.28388311198017,
+                  "sd": 11.759416784517002,
+                  "interval": {
+                    "lower": 7,
+                    "upper": 50
+                  },
+                  "upper_quantile": 45,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 22.118,
+                  "simulation_variance": 133.890076
+                },
+                "procedures": {
+                  "mean": 102.96,
+                  "variance": 3289.2641214718337,
+                  "sd": 57.35210651294191,
+                  "interval": {
+                    "lower": 27,
+                    "upper": 239
+                  },
+                  "upper_quantile": 208,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 103.4135,
+                  "simulation_variance": 3155.98151775
+                }
+              },
+              {
+                "id": "t2_ge20",
+                "type": "СД2",
+                "duration": "≥20 лет",
+                "label": "СД2 · ≥20 лет",
+                "n": 1000,
+                "risk_per_1000": 32.0,
+                "patients": {
+                  "mean": 32.0,
+                  "variance": 274.1291290090958,
+                  "sd": 16.556845382170355,
+                  "interval": {
+                    "lower": 10,
+                    "upper": 74
+                  },
+                  "upper_quantile": 65,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 32.463,
+                  "simulation_variance": 271.115631
+                },
+                "procedures": {
+                  "mean": 149.76,
+                  "variance": 6383.017035208818,
+                  "sd": 79.89378596116732,
+                  "interval": {
+                    "lower": 40,
+                    "upper": 355
+                  },
+                  "upper_quantile": 306,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 152.2935,
+                  "simulation_variance": 6293.257357750001
+                }
+              }
+            ],
+            "parameter_variance_patients": 3877.5472920852444,
+            "event_variance_patients": 123.0915252821334,
+            "variance_components": {
+              "patients": {
+                "event": 123.0915252821334,
+                "parameter": 3877.5472920852444
+              },
+              "procedures": {
+                "course": 1503.8831999999998,
+                "patients": 2695.999823339398,
+                "parameter": 84927.59181016784
+              }
+            }
+          },
+          {
+            "id": "vit",
+            "name": "Витрэктомия",
+            "unit": "операций",
+            "course_mean": 1.05,
+            "course_variance": 0.0475,
+            "period_mean": 1.05,
+            "period_variance": 0.0475,
+            "distribution_family": "1 + Бернулли дополнительной операции",
+            "truncated_mass_bound": 0.0,
+            "patients": {
+              "mean": 3.5999999999999996,
+              "variance": 6.8319412025070125,
+              "sd": 2.6137982329374645,
+              "interval": {
+                "lower": 0,
+                "upper": 10
+              },
+              "upper_quantile": 8,
+              "zero_probability": 0.068,
+              "simulation_mean": 3.589,
+              "simulation_variance": 7.022079
+            },
+            "procedures": {
+              "mean": 3.78,
+              "variance": 7.703215175763982,
+              "sd": 2.7754666590978863,
+              "interval": {
+                "lower": 0,
+                "upper": 11
+              },
+              "upper_quantile": 9,
+              "zero_probability": 0.068,
+              "simulation_mean": 3.7635,
+              "simulation_variance": 7.840567749999999
+            },
+            "groups": [
+              {
+                "id": "t1_lt5",
+                "type": "СД1",
+                "duration": "<5 лет",
+                "label": "СД1 · <5 лет",
+                "n": 1000,
+                "risk_per_1000": 0.05,
+                "patients": {
+                  "mean": 0.05,
+                  "variance": 0.05062182622189397,
+                  "sd": 0.2249929470492219,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 1
+                  },
+                  "upper_quantile": 1,
+                  "zero_probability": 0.943,
+                  "simulation_mean": 0.058,
+                  "simulation_variance": 0.056636
+                },
+                "procedures": {
+                  "mean": 0.052500000000000005,
+                  "variance": 0.058185563409638104,
+                  "sd": 0.24121683898442517,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 1
+                  },
+                  "upper_quantile": 1,
+                  "zero_probability": 0.943,
+                  "simulation_mean": 0.0615,
+                  "simulation_variance": 0.06671774999999999
+                }
+              },
+              {
+                "id": "t1_5_9",
+                "type": "СД1",
+                "duration": "5–9 лет",
+                "label": "СД1 · 5–9 лет",
+                "n": 1000,
+                "risk_per_1000": 0.1,
+                "patients": {
+                  "mean": 0.1,
+                  "variance": 0.10248710978467836,
+                  "sd": 0.3201360801045055,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 1
+                  },
+                  "upper_quantile": 1,
+                  "zero_probability": 0.9125,
+                  "simulation_mean": 0.0925,
+                  "simulation_variance": 0.09394375
+                },
+                "procedures": {
+                  "mean": 0.10500000000000001,
+                  "variance": 0.11774203853760791,
+                  "sd": 0.3431355978874939,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 1
+                  },
+                  "upper_quantile": 1,
+                  "zero_probability": 0.9125,
+                  "simulation_mean": 0.099,
+                  "simulation_variance": 0.11519899999999998
+                }
+              },
+              {
+                "id": "t1_10_19",
+                "type": "СД1",
+                "duration": "10–19 лет",
+                "label": "СД1 · 10–19 лет",
+                "n": 1000,
+                "risk_per_1000": 0.4,
+                "patients": {
+                  "mean": 0.4,
+                  "variance": 0.43977502987684314,
+                  "sd": 0.6631553587786524,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 2
+                  },
+                  "upper_quantile": 2,
+                  "zero_probability": 0.689,
+                  "simulation_mean": 0.385,
+                  "simulation_variance": 0.405775
+                },
+                "procedures": {
+                  "mean": 0.42000000000000004,
+                  "variance": 0.5038519704392196,
+                  "sd": 0.7098253098046163,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 2
+                  },
+                  "upper_quantile": 2,
+                  "zero_probability": 0.689,
+                  "simulation_mean": 0.4045,
+                  "simulation_variance": 0.46987974999999993
+                }
+              },
+              {
+                "id": "t1_ge20",
+                "type": "СД1",
+                "duration": "≥20 лет",
+                "label": "СД1 · ≥20 лет",
+                "n": 1000,
+                "risk_per_1000": 1.25,
+                "patients": {
+                  "mean": 1.25,
+                  "variance": 1.6379101633583735,
+                  "sd": 1.2798086432581917,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 4
+                  },
+                  "upper_quantile": 4,
+                  "zero_probability": 0.3345,
+                  "simulation_mean": 1.226,
+                  "simulation_variance": 1.609924
+                },
+                "procedures": {
+                  "mean": 1.3125,
+                  "variance": 1.8651709551026068,
+                  "sd": 1.3657126180505936,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 5
+                  },
+                  "upper_quantile": 4,
+                  "zero_probability": 0.3345,
+                  "simulation_mean": 1.2805,
+                  "simulation_variance": 1.80481975
+                }
+              },
+              {
+                "id": "t2_lt5",
+                "type": "СД2",
+                "duration": "<5 лет",
+                "label": "СД2 · <5 лет",
+                "n": 1000,
+                "risk_per_1000": 0.1,
+                "patients": {
+                  "mean": 0.1,
+                  "variance": 0.10248710978467836,
+                  "sd": 0.3201360801045055,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 1
+                  },
+                  "upper_quantile": 1,
+                  "zero_probability": 0.9055,
+                  "simulation_mean": 0.1005,
+                  "simulation_variance": 0.10239975
+                },
+                "procedures": {
+                  "mean": 0.10500000000000001,
+                  "variance": 0.11774203853760791,
+                  "sd": 0.3431355978874939,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 1
+                  },
+                  "upper_quantile": 1,
+                  "zero_probability": 0.9055,
+                  "simulation_mean": 0.107,
+                  "simulation_variance": 0.12255100000000001
+                }
+              },
+              {
+                "id": "t2_5_9",
+                "type": "СД2",
+                "duration": "5–9 лет",
+                "label": "СД2 · 5–9 лет",
+                "n": 1000,
+                "risk_per_1000": 0.2,
+                "patients": {
+                  "mean": 0.2,
+                  "variance": 0.20994687842983661,
+                  "sd": 0.45819960544487226,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 1
+                  },
+                  "upper_quantile": 1,
+                  "zero_probability": 0.816,
+                  "simulation_mean": 0.207,
+                  "simulation_variance": 0.22315100000000002
+                },
+                "procedures": {
+                  "mean": 0.21000000000000002,
+                  "variance": 0.2409664334688949,
+                  "sd": 0.4908833196075162,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 1
+                  },
+                  "upper_quantile": 1,
+                  "zero_probability": 0.816,
+                  "simulation_mean": 0.212,
+                  "simulation_variance": 0.23605600000000004
+                }
+              },
+              {
+                "id": "t2_10_19",
+                "type": "СД2",
+                "duration": "10–19 лет",
+                "label": "СД2 · 10–19 лет",
+                "n": 1000,
+                "risk_per_1000": 0.5,
+                "patients": {
+                  "mean": 0.5,
+                  "variance": 0.5621387326088175,
+                  "sd": 0.7497591163892691,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 2
+                  },
+                  "upper_quantile": 2,
+                  "zero_probability": 0.6285,
+                  "simulation_mean": 0.49,
+                  "simulation_variance": 0.5378999999999999
+                },
+                "procedures": {
+                  "mean": 0.525,
+                  "variance": 0.6435079527012215,
+                  "sd": 0.8021894743146544,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 3
+                  },
+                  "upper_quantile": 2,
+                  "zero_probability": 0.6285,
+                  "simulation_mean": 0.5205,
+                  "simulation_variance": 0.6275797499999999
+                }
+              },
+              {
+                "id": "t2_ge20",
+                "type": "СД2",
+                "duration": "≥20 лет",
+                "label": "СД2 · ≥20 лет",
+                "n": 1000,
+                "risk_per_1000": 1.0,
+                "patients": {
+                  "mean": 1.0,
+                  "variance": 1.2483599560630758,
+                  "sd": 1.1173002980681048,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 4
+                  },
+                  "upper_quantile": 3,
+                  "zero_probability": 0.406,
+                  "simulation_mean": 1.03,
+                  "simulation_variance": 1.3231
+                },
+                "procedures": {
+                  "mean": 1.05,
+                  "variance": 1.4238168515595413,
+                  "sd": 1.1932379693755732,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 4
+                  },
+                  "upper_quantile": 3,
+                  "zero_probability": 0.406,
+                  "simulation_mean": 1.0785,
+                  "simulation_variance": 1.4973377499999996
+                }
+              }
+            ],
+            "parameter_variance_patients": 3.2357337218324655,
+            "event_variance_patients": 3.5962074806745465,
+            "variance_components": {
+              "patients": {
+                "event": 3.5962074806745465,
+                "parameter": 3.2357337218324655
+              },
+              "procedures": {
+                "course": 0.17099999999999999,
+                "patients": 3.9648187474436876,
+                "parameter": 3.5673964283202935
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "peto",
+      "payload": {
+        "profile": "expert_annual",
+        "populations": {
+          "t1_lt5": 1000,
+          "t1_5_9": 1000,
+          "t1_10_19": 1000,
+          "t1_ge20": 1000,
+          "t2_lt5": 1000,
+          "t2_5_9": 1000,
+          "t2_10_19": 1000,
+          "t2_ge20": 1000
+        },
+        "risks_per_1000": {
+          "t1_lt5": {
+            "prp": 1,
+            "dme": 1,
+            "vit": 0.05
+          },
+          "t1_5_9": {
+            "prp": 3,
+            "dme": 4,
+            "vit": 0.1
+          },
+          "t1_10_19": {
+            "prp": 10,
+            "dme": 15,
+            "vit": 0.4
+          },
+          "t1_ge20": {
+            "prp": 25,
+            "dme": 35,
+            "vit": 1.25
+          },
+          "t2_lt5": {
+            "prp": 1.5,
+            "dme": 6,
+            "vit": 0.1
+          },
+          "t2_5_9": {
+            "prp": 4,
+            "dme": 12,
+            "vit": 0.2
+          },
+          "t2_10_19": {
+            "prp": 9,
+            "dme": 22,
+            "vit": 0.5
+          },
+          "t2_ge20": {
+            "prp": 16,
+            "dme": 32,
+            "vit": 1
+          }
+        },
+        "coverage": 0.95,
+        "iterations": 2000,
+        "seed": 20261016,
+        "uncertainty_cv": {
+          "prp": 0,
+          "dme": 0,
+          "vit": 0
+        },
+        "capture": {
+          "prp": 1.0,
+          "dme": 1.0,
+          "vit": 1.0
+        },
+        "procedures": {
+          "prp": {
+            "mean": 2.42,
+            "sd": 1.51
+          },
+          "dme": {
+            "mean": 7.7,
+            "sd": 1.9,
+            "bilateral_probability": 0.2
+          },
+          "vit": {
+            "repeat_probability": 0.05
+          }
+        },
+        "include_comparison": false
+      },
+      "expected": {
+        "meta": {
+          "profile": "expert_annual",
+          "coverage": 0.95,
+          "iterations": 2000,
+          "seed": 20261016,
+          "population_total": 8000,
+          "elapsed_seconds": 0.022,
+          "model_version": "1.1.0",
+          "timing_label": "Годовой контингент · полный 12-месячный период",
+          "interval_kind": "marginal_central_predictive",
+          "quadrature_nodes": 96,
+          "model_name": "Стратифицированная биномиальная модель пациентов с составным распределением числа процедур"
+        },
+        "warnings": [
+          "Групповые годовые частоты из СД.docx — экспертные сценарии, а не измеренные вероятности. Исходная сводная ошибка витрэктомии не используется.",
+          "Распределения кратности первого года из исследований переносятся на всех пациентов с годовым лечением как редактируемое допущение.",
+          "Прогнозные интервалы условны на выбранные источники и допущения; модель не проверена на данных Москвы или конкретной больницы.",
+          "CV интенсивности — настраиваемая неопределённость переноса, а не оценённый по публикациям доверительный интервал.",
+          "При CV=0 показаны условные прогнозные интервалы при фиксированных рисках. Опубликованные SD индивидуального количества процедур уже включены как SD²; это не неопределённость годовой вероятности вмешательства.",
+          "Средние и SD кратности, доля второго глаза, повторной операции и направлений заданы как фиксированные сценарные параметры; неопределённость самих этих параметров исследуется их изменением, а не отдельными априорными распределениями.",
+          "Пациенты разных вмешательств могут совпадать. Общий итог уникальных людей по трём вмешательствам не рассчитывается.",
+          "Квантили оценены симуляцией; при изменении seed или числа симуляций границы могут немного изменяться. Средние и дисперсии вычисляются отдельно интегрированием модели.",
+          "Сезонные месячные коэффициенты не заданы. Результат относится ко всему 12-месячному периоду."
+        ],
+        "parameters": {
+          "profile": "expert_annual",
+          "populations": {
+            "t1_lt5": 1000,
+            "t1_5_9": 1000,
+            "t1_10_19": 1000,
+            "t1_ge20": 1000,
+            "t2_lt5": 1000,
+            "t2_5_9": 1000,
+            "t2_10_19": 1000,
+            "t2_ge20": 1000
+          },
+          "risks_per_1000": {
+            "t1_lt5": {
+              "prp": 1.0,
+              "dme": 1.0,
+              "vit": 0.05
+            },
+            "t1_5_9": {
+              "prp": 3.0,
+              "dme": 4.0,
+              "vit": 0.1
+            },
+            "t1_10_19": {
+              "prp": 10.0,
+              "dme": 15.0,
+              "vit": 0.4
+            },
+            "t1_ge20": {
+              "prp": 25.0,
+              "dme": 35.0,
+              "vit": 1.25
+            },
+            "t2_lt5": {
+              "prp": 1.5,
+              "dme": 6.0,
+              "vit": 0.1
+            },
+            "t2_5_9": {
+              "prp": 4.0,
+              "dme": 12.0,
+              "vit": 0.2
+            },
+            "t2_10_19": {
+              "prp": 9.0,
+              "dme": 22.0,
+              "vit": 0.5
+            },
+            "t2_ge20": {
+              "prp": 16.0,
+              "dme": 32.0,
+              "vit": 1.0
+            }
+          },
+          "coverage": 0.95,
+          "iterations": 2000,
+          "seed": 20261016,
+          "uncertainty_cv": {
+            "prp": 0.0,
+            "dme": 0.0,
+            "vit": 0.0
+          },
+          "capture": {
+            "prp": 1.0,
+            "dme": 1.0,
+            "vit": 1.0
+          },
+          "procedures": {
+            "prp": {
+              "mean": 2.42,
+              "sd": 1.51
+            },
+            "dme": {
+              "mean": 7.7,
+              "sd": 1.9,
+              "bilateral_probability": 0.2,
+              "moment_source": "Peto2022"
+            },
+            "vit": {
+              "repeat_probability": 0.05
+            }
+          },
+          "include_comparison": false
+        },
+        "interventions": [
+          {
+            "id": "prp",
+            "name": "ПРЛК",
+            "unit": "сеансов",
+            "course_mean": 2.42,
+            "course_variance": 2.2801,
+            "period_mean": 2.42,
+            "period_variance": 2.2801,
+            "distribution_family": "1 + отрицательное биномиальное",
+            "truncated_mass_bound": 8.493206138382448e-14,
+            "patients": {
+              "mean": 69.5,
+              "variance": 68.40975,
+              "sd": 8.271018679703245,
+              "interval": {
+                "lower": 53,
+                "upper": 86
+              },
+              "upper_quantile": 83,
+              "zero_probability": 0.0,
+              "simulation_mean": 69.3475,
+              "simulation_variance": 67.45674375
+            },
+            "procedures": {
+              "mean": 168.19,
+              "variance": 559.1018099,
+              "sd": 23.64533378702868,
+              "interval": {
+                "lower": 123,
+                "upper": 215
+              },
+              "upper_quantile": 206,
+              "zero_probability": 0.0,
+              "simulation_mean": 167.595,
+              "simulation_variance": 557.753975
+            },
+            "groups": [
+              {
+                "id": "t1_lt5",
+                "type": "СД1",
+                "duration": "<5 лет",
+                "label": "СД1 · <5 лет",
+                "n": 1000,
+                "risk_per_1000": 1.0,
+                "patients": {
+                  "mean": 1.0,
+                  "variance": 0.9990000000000001,
+                  "sd": 0.999499874937461,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 3
+                  },
+                  "upper_quantile": 3,
+                  "zero_probability": 0.378,
+                  "simulation_mean": 0.9865,
+                  "simulation_variance": 1.0033177500000001
+                },
+                "procedures": {
+                  "mean": 2.42,
+                  "variance": 8.130643599999999,
+                  "sd": 2.851428343830509,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 9
+                  },
+                  "upper_quantile": 8,
+                  "zero_probability": 0.378,
+                  "simulation_mean": 2.358,
+                  "simulation_variance": 7.408835999999999
+                }
+              },
+              {
+                "id": "t1_5_9",
+                "type": "СД1",
+                "duration": "5–9 лет",
+                "label": "СД1 · 5–9 лет",
+                "n": 1000,
+                "risk_per_1000": 3.0,
+                "patients": {
+                  "mean": 3.0,
+                  "variance": 2.991,
+                  "sd": 1.729450779872038,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 7
+                  },
+                  "upper_quantile": 6,
+                  "zero_probability": 0.0465,
+                  "simulation_mean": 3.0715,
+                  "simulation_variance": 3.06638775
+                },
+                "procedures": {
+                  "mean": 7.26,
+                  "variance": 24.3567924,
+                  "sd": 4.935260114725464,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 19
+                  },
+                  "upper_quantile": 17,
+                  "zero_probability": 0.0465,
+                  "simulation_mean": 7.489,
+                  "simulation_variance": 25.386879
+                }
+              },
+              {
+                "id": "t1_10_19",
+                "type": "СД1",
+                "duration": "10–19 лет",
+                "label": "СД1 · 10–19 лет",
+                "n": 1000,
+                "risk_per_1000": 10.0,
+                "patients": {
+                  "mean": 10.0,
+                  "variance": 9.9,
+                  "sd": 3.146426544510455,
+                  "interval": {
+                    "lower": 4,
+                    "upper": 16
+                  },
+                  "upper_quantile": 15,
+                  "zero_probability": 0.0005,
+                  "simulation_mean": 9.9335,
+                  "simulation_variance": 9.81207775
+                },
+                "procedures": {
+                  "mean": 24.2,
+                  "variance": 80.77936,
+                  "sd": 8.987733863438548,
+                  "interval": {
+                    "lower": 9,
+                    "upper": 43
+                  },
+                  "upper_quantile": 39,
+                  "zero_probability": 0.0005,
+                  "simulation_mean": 23.9805,
+                  "simulation_variance": 80.24411975000001
+                }
+              },
+              {
+                "id": "t1_ge20",
+                "type": "СД1",
+                "duration": "≥20 лет",
+                "label": "СД1 · ≥20 лет",
+                "n": 1000,
+                "risk_per_1000": 25.0,
+                "patients": {
+                  "mean": 25.0,
+                  "variance": 24.375,
+                  "sd": 4.937104414532874,
+                  "interval": {
+                    "lower": 16,
+                    "upper": 35
+                  },
+                  "upper_quantile": 33,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 24.8275,
+                  "simulation_variance": 24.25374375
+                },
+                "procedures": {
+                  "mean": 60.5,
+                  "variance": 199.75224999999998,
+                  "sd": 14.133373624156405,
+                  "interval": {
+                    "lower": 34,
+                    "upper": 89
+                  },
+                  "upper_quantile": 84,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 60.0815,
+                  "simulation_variance": 202.99385775
+                }
+              },
+              {
+                "id": "t2_lt5",
+                "type": "СД2",
+                "duration": "<5 лет",
+                "label": "СД2 · <5 лет",
+                "n": 1000,
+                "risk_per_1000": 1.5,
+                "patients": {
+                  "mean": 1.5,
+                  "variance": 1.4977500000000001,
+                  "sd": 1.2238259680199632,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 4
+                  },
+                  "upper_quantile": 4,
+                  "zero_probability": 0.2105,
+                  "simulation_mean": 1.5455,
+                  "simulation_variance": 1.5219297499999997
+                },
+                "procedures": {
+                  "mean": 3.63,
+                  "variance": 12.191573100000001,
+                  "sd": 3.4916433237087663,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 12
+                  },
+                  "upper_quantile": 10,
+                  "zero_probability": 0.2105,
+                  "simulation_mean": 3.7455,
+                  "simulation_variance": 12.30572975
+                }
+              },
+              {
+                "id": "t2_5_9",
+                "type": "СД2",
+                "duration": "5–9 лет",
+                "label": "СД2 · 5–9 лет",
+                "n": 1000,
+                "risk_per_1000": 4.0,
+                "patients": {
+                  "mean": 4.0,
+                  "variance": 3.9839999999999995,
+                  "sd": 1.9959959919799437,
+                  "interval": {
+                    "lower": 1,
+                    "upper": 8
+                  },
+                  "upper_quantile": 7,
+                  "zero_probability": 0.0195,
+                  "simulation_mean": 3.9225,
+                  "simulation_variance": 3.9664937499999997
+                },
+                "procedures": {
+                  "mean": 9.68,
+                  "variance": 32.452297599999994,
+                  "sd": 5.696691811920318,
+                  "interval": {
+                    "lower": 1,
+                    "upper": 22
+                  },
+                  "upper_quantile": 20,
+                  "zero_probability": 0.0195,
+                  "simulation_mean": 9.4865,
+                  "simulation_variance": 32.48981775
+                }
+              },
+              {
+                "id": "t2_10_19",
+                "type": "СД2",
+                "duration": "10–19 лет",
+                "label": "СД2 · 10–19 лет",
+                "n": 1000,
+                "risk_per_1000": 9.0,
+                "patients": {
+                  "mean": 9.0,
+                  "variance": 8.919,
+                  "sd": 2.986469487538756,
+                  "interval": {
+                    "lower": 4,
+                    "upper": 15
+                  },
+                  "upper_quantile": 14,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 8.9915,
+                  "simulation_variance": 8.368427749999999
+                },
+                "procedures": {
+                  "mean": 21.78,
+                  "variance": 72.7541316,
+                  "sd": 8.529603249858694,
+                  "interval": {
+                    "lower": 7,
+                    "upper": 39
+                  },
+                  "upper_quantile": 36,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 21.699,
+                  "simulation_variance": 70.68439899999998
+                }
+              },
+              {
+                "id": "t2_ge20",
+                "type": "СД2",
+                "duration": "≥20 лет",
+                "label": "СД2 · ≥20 лет",
+                "n": 1000,
+                "risk_per_1000": 16.0,
+                "patients": {
+                  "mean": 16.0,
+                  "variance": 15.744000000000002,
+                  "sd": 3.9678709656439186,
+                  "interval": {
+                    "lower": 9,
+                    "upper": 24
+                  },
+                  "upper_quantile": 23,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 16.069,
+                  "simulation_variance": 15.779239000000002
+                },
+                "procedures": {
+                  "mean": 38.72,
+                  "variance": 128.6847616,
+                  "sd": 11.343930606275762,
+                  "interval": {
+                    "lower": 19,
+                    "upper": 62
+                  },
+                  "upper_quantile": 59,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 38.755,
+                  "simulation_variance": 129.264975
+                }
+              }
+            ],
+            "parameter_variance_patients": 0.0,
+            "event_variance_patients": 68.40975,
+            "variance_components": {
+              "patients": {
+                "event": 68.40975,
+                "parameter": 0.0
+              },
+              "procedures": {
+                "course": 158.46695,
+                "patients": 400.6348599,
+                "parameter": 0.0
+              }
+            }
+          },
+          {
+            "id": "dme",
+            "name": "ИВВ при ДМО",
+            "unit": "инъекций",
+            "course_mean": 9.24,
+            "course_variance": 13.818400000000004,
+            "period_mean": 9.24,
+            "period_variance": 13.818400000000004,
+            "distribution_family": "смесь положительных целочисленных распределений",
+            "truncated_mass_bound": 3.26405569239796e-14,
+            "patients": {
+              "mean": 127.0,
+              "variance": 123.845,
+              "sd": 11.128566843938172,
+              "interval": {
+                "lower": 106,
+                "upper": 149
+              },
+              "upper_quantile": 145,
+              "zero_probability": 0.0,
+              "simulation_mean": 127.032,
+              "simulation_variance": 123.06397600000001
+            },
+            "procedures": {
+              "mean": 1173.48,
+              "variance": 12328.525672,
+              "sd": 111.03389424855817,
+              "interval": {
+                "lower": 967,
+                "upper": 1391
+              },
+              "upper_quantile": 1356,
+              "zero_probability": 0.0,
+              "simulation_mean": 1173.362,
+              "simulation_variance": 11721.415956
+            },
+            "groups": [
+              {
+                "id": "t1_lt5",
+                "type": "СД1",
+                "duration": "<5 лет",
+                "label": "СД1 · <5 лет",
+                "n": 1000,
+                "risk_per_1000": 1.0,
+                "patients": {
+                  "mean": 1.0,
+                  "variance": 0.9990000000000001,
+                  "sd": 0.999499874937461,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 3
+                  },
+                  "upper_quantile": 3,
+                  "zero_probability": 0.377,
+                  "simulation_mean": 1.0005,
+                  "simulation_variance": 1.0674997499999999
+                },
+                "procedures": {
+                  "mean": 9.24,
+                  "variance": 99.11062240000001,
+                  "sd": 9.95543180379435,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 34
+                  },
+                  "upper_quantile": 29,
+                  "zero_probability": 0.377,
+                  "simulation_mean": 9.2335,
+                  "simulation_variance": 103.45297774999999
+                }
+              },
+              {
+                "id": "t1_5_9",
+                "type": "СД1",
+                "duration": "5–9 лет",
+                "label": "СД1 · 5–9 лет",
+                "n": 1000,
+                "risk_per_1000": 4.0,
+                "patients": {
+                  "mean": 4.0,
+                  "variance": 3.9839999999999995,
+                  "sd": 1.9959959919799437,
+                  "interval": {
+                    "lower": 1,
+                    "upper": 8
+                  },
+                  "upper_quantile": 8,
+                  "zero_probability": 0.017,
+                  "simulation_mean": 4.0195,
+                  "simulation_variance": 4.06311975
+                },
+                "procedures": {
+                  "mean": 36.96,
+                  "variance": 395.4179584,
+                  "sd": 19.885119019005142,
+                  "interval": {
+                    "lower": 6,
+                    "upper": 83
+                  },
+                  "upper_quantile": 75,
+                  "zero_probability": 0.017,
+                  "simulation_mean": 37.329,
+                  "simulation_variance": 402.293759
+                }
+              },
+              {
+                "id": "t1_10_19",
+                "type": "СД1",
+                "duration": "10–19 лет",
+                "label": "СД1 · 10–19 лет",
+                "n": 1000,
+                "risk_per_1000": 15.0,
+                "patients": {
+                  "mean": 15.0,
+                  "variance": 14.775,
+                  "sd": 3.843826218756514,
+                  "interval": {
+                    "lower": 8,
+                    "upper": 23
+                  },
+                  "upper_quantile": 21,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 15.0215,
+                  "simulation_variance": 13.73603775
+                },
+                "procedures": {
+                  "mean": 138.6,
+                  "variance": 1468.7300400000001,
+                  "sd": 38.32401388163824,
+                  "interval": {
+                    "lower": 70,
+                    "upper": 221
+                  },
+                  "upper_quantile": 206,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 138.987,
+                  "simulation_variance": 1421.880831
+                }
+              },
+              {
+                "id": "t1_ge20",
+                "type": "СД1",
+                "duration": "≥20 лет",
+                "label": "СД1 · ≥20 лет",
+                "n": 1000,
+                "risk_per_1000": 35.0,
+                "patients": {
+                  "mean": 35.0,
+                  "variance": 33.775,
+                  "sd": 5.811626278418116,
+                  "interval": {
+                    "lower": 24,
+                    "upper": 46
+                  },
+                  "upper_quantile": 44,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 34.8895,
+                  "simulation_variance": 32.92728974999999
+                },
+                "procedures": {
+                  "mean": 323.40000000000003,
+                  "variance": 3367.2724400000006,
+                  "sd": 58.028203832274535,
+                  "interval": {
+                    "lower": 212,
+                    "upper": 433
+                  },
+                  "upper_quantile": 415,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 321.482,
+                  "simulation_variance": 3229.7466759999998
+                }
+              },
+              {
+                "id": "t2_lt5",
+                "type": "СД2",
+                "duration": "<5 лет",
+                "label": "СД2 · <5 лет",
+                "n": 1000,
+                "risk_per_1000": 6.0,
+                "patients": {
+                  "mean": 6.0,
+                  "variance": 5.9639999999999995,
+                  "sd": 2.4421302176583457,
+                  "interval": {
+                    "lower": 2,
+                    "upper": 11
+                  },
+                  "upper_quantile": 10,
+                  "zero_probability": 0.0025,
+                  "simulation_mean": 5.9315,
+                  "simulation_variance": 6.021807750000001
+                },
+                "procedures": {
+                  "mean": 55.44,
+                  "variance": 592.1024064000001,
+                  "sd": 24.33315446874901,
+                  "interval": {
+                    "lower": 15,
+                    "upper": 110
+                  },
+                  "upper_quantile": 99,
+                  "zero_probability": 0.0025,
+                  "simulation_mean": 55.069,
+                  "simulation_variance": 609.6342390000001
+                }
+              },
+              {
+                "id": "t2_5_9",
+                "type": "СД2",
+                "duration": "5–9 лет",
+                "label": "СД2 · 5–9 лет",
+                "n": 1000,
+                "risk_per_1000": 12.0,
+                "patients": {
+                  "mean": 12.0,
+                  "variance": 11.856,
+                  "sd": 3.443254274665175,
+                  "interval": {
+                    "lower": 6,
+                    "upper": 19
+                  },
+                  "upper_quantile": 18,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 12.0635,
+                  "simulation_variance": 11.782467750000002
+                },
+                "procedures": {
+                  "mean": 110.88,
+                  "variance": 1178.0576256000002,
+                  "sd": 34.322844077960674,
+                  "interval": {
+                    "lower": 51,
+                    "upper": 184
+                  },
+                  "upper_quantile": 171,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 111.1435,
+                  "simulation_variance": 1155.83590775
+                }
+              },
+              {
+                "id": "t2_10_19",
+                "type": "СД2",
+                "duration": "10–19 лет",
+                "label": "СД2 · 10–19 лет",
+                "n": 1000,
+                "risk_per_1000": 22.0,
+                "patients": {
+                  "mean": 22.0,
+                  "variance": 21.516,
+                  "sd": 4.638534251247909,
+                  "interval": {
+                    "lower": 14,
+                    "upper": 31
+                  },
+                  "upper_quantile": 29,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 21.9665,
+                  "simulation_variance": 20.38837775
+                },
+                "procedures": {
+                  "mean": 203.28,
+                  "variance": 2140.9892416000002,
+                  "sd": 46.27082495050202,
+                  "interval": {
+                    "lower": 121,
+                    "upper": 293
+                  },
+                  "upper_quantile": 277,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 203.2065,
+                  "simulation_variance": 2001.5748577499999
+                }
+              },
+              {
+                "id": "t2_ge20",
+                "type": "СД2",
+                "duration": "≥20 лет",
+                "label": "СД2 · ≥20 лет",
+                "n": 1000,
+                "risk_per_1000": 32.0,
+                "patients": {
+                  "mean": 32.0,
+                  "variance": 30.976,
+                  "sd": 5.5656086818963475,
+                  "interval": {
+                    "lower": 22,
+                    "upper": 43
+                  },
+                  "upper_quantile": 41,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 32.1395,
+                  "simulation_variance": 30.66303975
+                },
+                "procedures": {
+                  "mean": 295.68,
+                  "variance": 3086.8453375999998,
+                  "sd": 55.55938568414881,
+                  "interval": {
+                    "lower": 195,
+                    "upper": 412
+                  },
+                  "upper_quantile": 393,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 296.9115,
+                  "simulation_variance": 3090.50766775
+                }
+              }
+            ],
+            "parameter_variance_patients": 0.0,
+            "event_variance_patients": 123.845,
+            "variance_components": {
+              "patients": {
+                "event": 123.845,
+                "parameter": 0.0
+              },
+              "procedures": {
+                "course": 1754.9368000000004,
+                "patients": 10573.588872,
+                "parameter": 0.0
+              }
+            }
+          },
+          {
+            "id": "vit",
+            "name": "Витрэктомия",
+            "unit": "операций",
+            "course_mean": 1.05,
+            "course_variance": 0.0475,
+            "period_mean": 1.05,
+            "period_variance": 0.0475,
+            "distribution_family": "1 + Бернулли дополнительной операции",
+            "truncated_mass_bound": 0.0,
+            "patients": {
+              "mean": 3.5999999999999996,
+              "variance": 3.596965,
+              "sd": 1.896566634737625,
+              "interval": {
+                "lower": 1,
+                "upper": 8
+              },
+              "upper_quantile": 7,
+              "zero_probability": 0.022,
+              "simulation_mean": 3.565,
+              "simulation_variance": 3.3247750000000003
+            },
+            "procedures": {
+              "mean": 3.78,
+              "variance": 4.1366539125,
+              "sd": 2.0338765725825154,
+              "interval": {
+                "lower": 1,
+                "upper": 8
+              },
+              "upper_quantile": 7,
+              "zero_probability": 0.022,
+              "simulation_mean": 3.7395,
+              "simulation_variance": 3.82163975
+            },
+            "groups": [
+              {
+                "id": "t1_lt5",
+                "type": "СД1",
+                "duration": "<5 лет",
+                "label": "СД1 · <5 лет",
+                "n": 1000,
+                "risk_per_1000": 0.05,
+                "patients": {
+                  "mean": 0.05,
+                  "variance": 0.0499975,
+                  "sd": 0.22360120751015636,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 1
+                  },
+                  "upper_quantile": 0,
+                  "zero_probability": 0.9525,
+                  "simulation_mean": 0.0485,
+                  "simulation_variance": 0.04814774999999999
+                },
+                "procedures": {
+                  "mean": 0.052500000000000005,
+                  "variance": 0.05749724375000001,
+                  "sd": 0.23978582891822445,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 1
+                  },
+                  "upper_quantile": 0,
+                  "zero_probability": 0.9525,
+                  "simulation_mean": 0.0495,
+                  "simulation_variance": 0.05104974999999999
+                }
+              },
+              {
+                "id": "t1_5_9",
+                "type": "СД1",
+                "duration": "5–9 лет",
+                "label": "СД1 · 5–9 лет",
+                "n": 1000,
+                "risk_per_1000": 0.1,
+                "patients": {
+                  "mean": 0.1,
+                  "variance": 0.09999000000000001,
+                  "sd": 0.3162119542332326,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 1
+                  },
+                  "upper_quantile": 1,
+                  "zero_probability": 0.894,
+                  "simulation_mean": 0.1115,
+                  "simulation_variance": 0.11006774999999999
+                },
+                "procedures": {
+                  "mean": 0.10500000000000001,
+                  "variance": 0.11498897500000002,
+                  "sd": 0.3391002432909773,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 1
+                  },
+                  "upper_quantile": 1,
+                  "zero_probability": 0.894,
+                  "simulation_mean": 0.116,
+                  "simulation_variance": 0.12354400000000001
+                }
+              },
+              {
+                "id": "t1_10_19",
+                "type": "СД1",
+                "duration": "10–19 лет",
+                "label": "СД1 · 10–19 лет",
+                "n": 1000,
+                "risk_per_1000": 0.4,
+                "patients": {
+                  "mean": 0.4,
+                  "variance": 0.39984000000000003,
+                  "sd": 0.6323290282756281,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 2
+                  },
+                  "upper_quantile": 1,
+                  "zero_probability": 0.673,
+                  "simulation_mean": 0.386,
+                  "simulation_variance": 0.376004
+                },
+                "procedures": {
+                  "mean": 0.42000000000000004,
+                  "variance": 0.45982360000000005,
+                  "sd": 0.6781029420375642,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 2
+                  },
+                  "upper_quantile": 2,
+                  "zero_probability": 0.673,
+                  "simulation_mean": 0.4035,
+                  "simulation_variance": 0.4216877499999999
+                }
+              },
+              {
+                "id": "t1_ge20",
+                "type": "СД1",
+                "duration": "≥20 лет",
+                "label": "СД1 · ≥20 лет",
+                "n": 1000,
+                "risk_per_1000": 1.25,
+                "patients": {
+                  "mean": 1.25,
+                  "variance": 1.2484375,
+                  "sd": 1.1173349990043273,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 4
+                  },
+                  "upper_quantile": 3,
+                  "zero_probability": 0.291,
+                  "simulation_mean": 1.223,
+                  "simulation_variance": 1.176271
+                },
+                "procedures": {
+                  "mean": 1.3125,
+                  "variance": 1.43577734375,
+                  "sd": 1.1982392681555718,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 4
+                  },
+                  "upper_quantile": 3,
+                  "zero_probability": 0.291,
+                  "simulation_mean": 1.2985,
+                  "simulation_variance": 1.40339775
+                }
+              },
+              {
+                "id": "t2_lt5",
+                "type": "СД2",
+                "duration": "<5 лет",
+                "label": "СД2 · <5 лет",
+                "n": 1000,
+                "risk_per_1000": 0.1,
+                "patients": {
+                  "mean": 0.1,
+                  "variance": 0.09999000000000001,
+                  "sd": 0.3162119542332326,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 1
+                  },
+                  "upper_quantile": 1,
+                  "zero_probability": 0.911,
+                  "simulation_mean": 0.094,
+                  "simulation_variance": 0.09616399999999999
+                },
+                "procedures": {
+                  "mean": 0.10500000000000001,
+                  "variance": 0.11498897500000002,
+                  "sd": 0.3391002432909773,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 1
+                  },
+                  "upper_quantile": 1,
+                  "zero_probability": 0.911,
+                  "simulation_mean": 0.1,
+                  "simulation_variance": 0.11399999999999999
+                }
+              },
+              {
+                "id": "t2_5_9",
+                "type": "СД2",
+                "duration": "5–9 лет",
+                "label": "СД2 · 5–9 лет",
+                "n": 1000,
+                "risk_per_1000": 0.2,
+                "patients": {
+                  "mean": 0.2,
+                  "variance": 0.19996,
+                  "sd": 0.4471688719041163,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 1
+                  },
+                  "upper_quantile": 1,
+                  "zero_probability": 0.817,
+                  "simulation_mean": 0.1955,
+                  "simulation_variance": 0.18327975000000002
+                },
+                "procedures": {
+                  "mean": 0.21000000000000002,
+                  "variance": 0.22995590000000002,
+                  "sd": 0.47953717269884305,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 1
+                  },
+                  "upper_quantile": 1,
+                  "zero_probability": 0.817,
+                  "simulation_mean": 0.206,
+                  "simulation_variance": 0.21456400000000003
+                }
+              },
+              {
+                "id": "t2_10_19",
+                "type": "СД2",
+                "duration": "10–19 лет",
+                "label": "СД2 · 10–19 лет",
+                "n": 1000,
+                "risk_per_1000": 0.5,
+                "patients": {
+                  "mean": 0.5,
+                  "variance": 0.4997500000000001,
+                  "sd": 0.706929982388638,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 2
+                  },
+                  "upper_quantile": 2,
+                  "zero_probability": 0.6015,
+                  "simulation_mean": 0.5165,
+                  "simulation_variance": 0.52772775
+                },
+                "procedures": {
+                  "mean": 0.525,
+                  "variance": 0.5747243750000002,
+                  "sd": 0.7581057808775766,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 2
+                  },
+                  "upper_quantile": 2,
+                  "zero_probability": 0.6015,
+                  "simulation_mean": 0.539,
+                  "simulation_variance": 0.588479
+                }
+              },
+              {
+                "id": "t2_ge20",
+                "type": "СД2",
+                "duration": "≥20 лет",
+                "label": "СД2 · ≥20 лет",
+                "n": 1000,
+                "risk_per_1000": 1.0,
+                "patients": {
+                  "mean": 1.0,
+                  "variance": 0.9990000000000001,
+                  "sd": 0.999499874937461,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 3
+                  },
+                  "upper_quantile": 3,
+                  "zero_probability": 0.368,
+                  "simulation_mean": 0.99,
+                  "simulation_variance": 0.9678999999999999
+                },
+                "procedures": {
+                  "mean": 1.05,
+                  "variance": 1.1488975000000001,
+                  "sd": 1.0718663629389626,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 3
+                  },
+                  "upper_quantile": 3,
+                  "zero_probability": 0.368,
+                  "simulation_mean": 1.027,
+                  "simulation_variance": 1.0692709999999996
+                }
+              }
+            ],
+            "parameter_variance_patients": 0.0,
+            "event_variance_patients": 3.596965,
+            "variance_components": {
+              "patients": {
+                "event": 3.596965,
+                "parameter": 0.0
+              },
+              "procedures": {
+                "course": 0.17099999999999999,
+                "patients": 3.9656539125,
+                "parameter": 0.0
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "drako",
+      "payload": {
+        "profile": "expert_annual",
+        "populations": {
+          "t1_lt5": 1000,
+          "t1_5_9": 1000,
+          "t1_10_19": 1000,
+          "t1_ge20": 1000,
+          "t2_lt5": 1000,
+          "t2_5_9": 1000,
+          "t2_10_19": 1000,
+          "t2_ge20": 1000
+        },
+        "risks_per_1000": {
+          "t1_lt5": {
+            "prp": 1,
+            "dme": 1,
+            "vit": 0.05
+          },
+          "t1_5_9": {
+            "prp": 3,
+            "dme": 4,
+            "vit": 0.1
+          },
+          "t1_10_19": {
+            "prp": 10,
+            "dme": 15,
+            "vit": 0.4
+          },
+          "t1_ge20": {
+            "prp": 25,
+            "dme": 35,
+            "vit": 1.25
+          },
+          "t2_lt5": {
+            "prp": 1.5,
+            "dme": 6,
+            "vit": 0.1
+          },
+          "t2_5_9": {
+            "prp": 4,
+            "dme": 12,
+            "vit": 0.2
+          },
+          "t2_10_19": {
+            "prp": 9,
+            "dme": 22,
+            "vit": 0.5
+          },
+          "t2_ge20": {
+            "prp": 16,
+            "dme": 32,
+            "vit": 1
+          }
+        },
+        "coverage": 0.95,
+        "iterations": 2000,
+        "seed": 20261016,
+        "uncertainty_cv": {
+          "prp": 0,
+          "dme": 0,
+          "vit": 0
+        },
+        "capture": {
+          "prp": 1.0,
+          "dme": 1.0,
+          "vit": 1.0
+        },
+        "procedures": {
+          "prp": {
+            "mean": 2.42,
+            "sd": 1.51
+          },
+          "dme": {
+            "mean": 6.4,
+            "sd": 2.1,
+            "bilateral_probability": 0.2
+          },
+          "vit": {
+            "repeat_probability": 0.05
+          }
+        },
+        "include_comparison": false
+      },
+      "expected": {
+        "meta": {
+          "profile": "expert_annual",
+          "coverage": 0.95,
+          "iterations": 2000,
+          "seed": 20261016,
+          "population_total": 8000,
+          "elapsed_seconds": 0.022,
+          "model_version": "1.1.0",
+          "timing_label": "Годовой контингент · полный 12-месячный период",
+          "interval_kind": "marginal_central_predictive",
+          "quadrature_nodes": 96,
+          "model_name": "Стратифицированная биномиальная модель пациентов с составным распределением числа процедур"
+        },
+        "warnings": [
+          "Групповые годовые частоты из СД.docx — экспертные сценарии, а не измеренные вероятности. Исходная сводная ошибка витрэктомии не используется.",
+          "Распределения кратности первого года из исследований переносятся на всех пациентов с годовым лечением как редактируемое допущение.",
+          "Прогнозные интервалы условны на выбранные источники и допущения; модель не проверена на данных Москвы или конкретной больницы.",
+          "CV интенсивности — настраиваемая неопределённость переноса, а не оценённый по публикациям доверительный интервал.",
+          "При CV=0 показаны условные прогнозные интервалы при фиксированных рисках. Опубликованные SD индивидуального количества процедур уже включены как SD²; это не неопределённость годовой вероятности вмешательства.",
+          "Средние и SD кратности, доля второго глаза, повторной операции и направлений заданы как фиксированные сценарные параметры; неопределённость самих этих параметров исследуется их изменением, а не отдельными априорными распределениями.",
+          "Пациенты разных вмешательств могут совпадать. Общий итог уникальных людей по трём вмешательствам не рассчитывается.",
+          "Квантили оценены симуляцией; при изменении seed или числа симуляций границы могут немного изменяться. Средние и дисперсии вычисляются отдельно интегрированием модели.",
+          "Сезонные месячные коэффициенты не заданы. Результат относится ко всему 12-месячному периоду."
+        ],
+        "parameters": {
+          "profile": "expert_annual",
+          "populations": {
+            "t1_lt5": 1000,
+            "t1_5_9": 1000,
+            "t1_10_19": 1000,
+            "t1_ge20": 1000,
+            "t2_lt5": 1000,
+            "t2_5_9": 1000,
+            "t2_10_19": 1000,
+            "t2_ge20": 1000
+          },
+          "risks_per_1000": {
+            "t1_lt5": {
+              "prp": 1.0,
+              "dme": 1.0,
+              "vit": 0.05
+            },
+            "t1_5_9": {
+              "prp": 3.0,
+              "dme": 4.0,
+              "vit": 0.1
+            },
+            "t1_10_19": {
+              "prp": 10.0,
+              "dme": 15.0,
+              "vit": 0.4
+            },
+            "t1_ge20": {
+              "prp": 25.0,
+              "dme": 35.0,
+              "vit": 1.25
+            },
+            "t2_lt5": {
+              "prp": 1.5,
+              "dme": 6.0,
+              "vit": 0.1
+            },
+            "t2_5_9": {
+              "prp": 4.0,
+              "dme": 12.0,
+              "vit": 0.2
+            },
+            "t2_10_19": {
+              "prp": 9.0,
+              "dme": 22.0,
+              "vit": 0.5
+            },
+            "t2_ge20": {
+              "prp": 16.0,
+              "dme": 32.0,
+              "vit": 1.0
+            }
+          },
+          "coverage": 0.95,
+          "iterations": 2000,
+          "seed": 20261016,
+          "uncertainty_cv": {
+            "prp": 0.0,
+            "dme": 0.0,
+            "vit": 0.0
+          },
+          "capture": {
+            "prp": 1.0,
+            "dme": 1.0,
+            "vit": 1.0
+          },
+          "procedures": {
+            "prp": {
+              "mean": 2.42,
+              "sd": 1.51
+            },
+            "dme": {
+              "mean": 6.4,
+              "sd": 2.1,
+              "bilateral_probability": 0.2,
+              "moment_source": "DRAKO2023"
+            },
+            "vit": {
+              "repeat_probability": 0.05
+            }
+          },
+          "include_comparison": false
+        },
+        "interventions": [
+          {
+            "id": "prp",
+            "name": "ПРЛК",
+            "unit": "сеансов",
+            "course_mean": 2.42,
+            "course_variance": 2.2801,
+            "period_mean": 2.42,
+            "period_variance": 2.2801,
+            "distribution_family": "1 + отрицательное биномиальное",
+            "truncated_mass_bound": 8.493206138382448e-14,
+            "patients": {
+              "mean": 69.5,
+              "variance": 68.40975,
+              "sd": 8.271018679703245,
+              "interval": {
+                "lower": 53,
+                "upper": 86
+              },
+              "upper_quantile": 83,
+              "zero_probability": 0.0,
+              "simulation_mean": 69.3475,
+              "simulation_variance": 67.45674375
+            },
+            "procedures": {
+              "mean": 168.19,
+              "variance": 559.1018099,
+              "sd": 23.64533378702868,
+              "interval": {
+                "lower": 123,
+                "upper": 215
+              },
+              "upper_quantile": 206,
+              "zero_probability": 0.0,
+              "simulation_mean": 167.595,
+              "simulation_variance": 557.753975
+            },
+            "groups": [
+              {
+                "id": "t1_lt5",
+                "type": "СД1",
+                "duration": "<5 лет",
+                "label": "СД1 · <5 лет",
+                "n": 1000,
+                "risk_per_1000": 1.0,
+                "patients": {
+                  "mean": 1.0,
+                  "variance": 0.9990000000000001,
+                  "sd": 0.999499874937461,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 3
+                  },
+                  "upper_quantile": 3,
+                  "zero_probability": 0.378,
+                  "simulation_mean": 0.9865,
+                  "simulation_variance": 1.0033177500000001
+                },
+                "procedures": {
+                  "mean": 2.42,
+                  "variance": 8.130643599999999,
+                  "sd": 2.851428343830509,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 9
+                  },
+                  "upper_quantile": 8,
+                  "zero_probability": 0.378,
+                  "simulation_mean": 2.358,
+                  "simulation_variance": 7.408835999999999
+                }
+              },
+              {
+                "id": "t1_5_9",
+                "type": "СД1",
+                "duration": "5–9 лет",
+                "label": "СД1 · 5–9 лет",
+                "n": 1000,
+                "risk_per_1000": 3.0,
+                "patients": {
+                  "mean": 3.0,
+                  "variance": 2.991,
+                  "sd": 1.729450779872038,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 7
+                  },
+                  "upper_quantile": 6,
+                  "zero_probability": 0.0465,
+                  "simulation_mean": 3.0715,
+                  "simulation_variance": 3.06638775
+                },
+                "procedures": {
+                  "mean": 7.26,
+                  "variance": 24.3567924,
+                  "sd": 4.935260114725464,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 19
+                  },
+                  "upper_quantile": 17,
+                  "zero_probability": 0.0465,
+                  "simulation_mean": 7.489,
+                  "simulation_variance": 25.386879
+                }
+              },
+              {
+                "id": "t1_10_19",
+                "type": "СД1",
+                "duration": "10–19 лет",
+                "label": "СД1 · 10–19 лет",
+                "n": 1000,
+                "risk_per_1000": 10.0,
+                "patients": {
+                  "mean": 10.0,
+                  "variance": 9.9,
+                  "sd": 3.146426544510455,
+                  "interval": {
+                    "lower": 4,
+                    "upper": 16
+                  },
+                  "upper_quantile": 15,
+                  "zero_probability": 0.0005,
+                  "simulation_mean": 9.9335,
+                  "simulation_variance": 9.81207775
+                },
+                "procedures": {
+                  "mean": 24.2,
+                  "variance": 80.77936,
+                  "sd": 8.987733863438548,
+                  "interval": {
+                    "lower": 9,
+                    "upper": 43
+                  },
+                  "upper_quantile": 39,
+                  "zero_probability": 0.0005,
+                  "simulation_mean": 23.9805,
+                  "simulation_variance": 80.24411975000001
+                }
+              },
+              {
+                "id": "t1_ge20",
+                "type": "СД1",
+                "duration": "≥20 лет",
+                "label": "СД1 · ≥20 лет",
+                "n": 1000,
+                "risk_per_1000": 25.0,
+                "patients": {
+                  "mean": 25.0,
+                  "variance": 24.375,
+                  "sd": 4.937104414532874,
+                  "interval": {
+                    "lower": 16,
+                    "upper": 35
+                  },
+                  "upper_quantile": 33,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 24.8275,
+                  "simulation_variance": 24.25374375
+                },
+                "procedures": {
+                  "mean": 60.5,
+                  "variance": 199.75224999999998,
+                  "sd": 14.133373624156405,
+                  "interval": {
+                    "lower": 34,
+                    "upper": 89
+                  },
+                  "upper_quantile": 84,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 60.0815,
+                  "simulation_variance": 202.99385775
+                }
+              },
+              {
+                "id": "t2_lt5",
+                "type": "СД2",
+                "duration": "<5 лет",
+                "label": "СД2 · <5 лет",
+                "n": 1000,
+                "risk_per_1000": 1.5,
+                "patients": {
+                  "mean": 1.5,
+                  "variance": 1.4977500000000001,
+                  "sd": 1.2238259680199632,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 4
+                  },
+                  "upper_quantile": 4,
+                  "zero_probability": 0.2105,
+                  "simulation_mean": 1.5455,
+                  "simulation_variance": 1.5219297499999997
+                },
+                "procedures": {
+                  "mean": 3.63,
+                  "variance": 12.191573100000001,
+                  "sd": 3.4916433237087663,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 12
+                  },
+                  "upper_quantile": 10,
+                  "zero_probability": 0.2105,
+                  "simulation_mean": 3.7455,
+                  "simulation_variance": 12.30572975
+                }
+              },
+              {
+                "id": "t2_5_9",
+                "type": "СД2",
+                "duration": "5–9 лет",
+                "label": "СД2 · 5–9 лет",
+                "n": 1000,
+                "risk_per_1000": 4.0,
+                "patients": {
+                  "mean": 4.0,
+                  "variance": 3.9839999999999995,
+                  "sd": 1.9959959919799437,
+                  "interval": {
+                    "lower": 1,
+                    "upper": 8
+                  },
+                  "upper_quantile": 7,
+                  "zero_probability": 0.0195,
+                  "simulation_mean": 3.9225,
+                  "simulation_variance": 3.9664937499999997
+                },
+                "procedures": {
+                  "mean": 9.68,
+                  "variance": 32.452297599999994,
+                  "sd": 5.696691811920318,
+                  "interval": {
+                    "lower": 1,
+                    "upper": 22
+                  },
+                  "upper_quantile": 20,
+                  "zero_probability": 0.0195,
+                  "simulation_mean": 9.4865,
+                  "simulation_variance": 32.48981775
+                }
+              },
+              {
+                "id": "t2_10_19",
+                "type": "СД2",
+                "duration": "10–19 лет",
+                "label": "СД2 · 10–19 лет",
+                "n": 1000,
+                "risk_per_1000": 9.0,
+                "patients": {
+                  "mean": 9.0,
+                  "variance": 8.919,
+                  "sd": 2.986469487538756,
+                  "interval": {
+                    "lower": 4,
+                    "upper": 15
+                  },
+                  "upper_quantile": 14,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 8.9915,
+                  "simulation_variance": 8.368427749999999
+                },
+                "procedures": {
+                  "mean": 21.78,
+                  "variance": 72.7541316,
+                  "sd": 8.529603249858694,
+                  "interval": {
+                    "lower": 7,
+                    "upper": 39
+                  },
+                  "upper_quantile": 36,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 21.699,
+                  "simulation_variance": 70.68439899999998
+                }
+              },
+              {
+                "id": "t2_ge20",
+                "type": "СД2",
+                "duration": "≥20 лет",
+                "label": "СД2 · ≥20 лет",
+                "n": 1000,
+                "risk_per_1000": 16.0,
+                "patients": {
+                  "mean": 16.0,
+                  "variance": 15.744000000000002,
+                  "sd": 3.9678709656439186,
+                  "interval": {
+                    "lower": 9,
+                    "upper": 24
+                  },
+                  "upper_quantile": 23,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 16.069,
+                  "simulation_variance": 15.779239000000002
+                },
+                "procedures": {
+                  "mean": 38.72,
+                  "variance": 128.6847616,
+                  "sd": 11.343930606275762,
+                  "interval": {
+                    "lower": 19,
+                    "upper": 62
+                  },
+                  "upper_quantile": 59,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 38.755,
+                  "simulation_variance": 129.264975
+                }
+              }
+            ],
+            "parameter_variance_patients": 0.0,
+            "event_variance_patients": 68.40975,
+            "variance_components": {
+              "patients": {
+                "event": 68.40975,
+                "parameter": 0.0
+              },
+              "procedures": {
+                "course": 158.46695,
+                "patients": 400.6348599,
+                "parameter": 0.0
+              }
+            }
+          },
+          {
+            "id": "dme",
+            "name": "ИВВ при ДМО",
+            "unit": "инъекций",
+            "course_mean": 7.68,
+            "course_variance": 11.845600000000003,
+            "period_mean": 7.68,
+            "period_variance": 11.845600000000003,
+            "distribution_family": "смесь положительных целочисленных распределений",
+            "truncated_mass_bound": 2.708944180085382e-14,
+            "patients": {
+              "mean": 127.0,
+              "variance": 123.845,
+              "sd": 11.128566843938172,
+              "interval": {
+                "lower": 106,
+                "upper": 149
+              },
+              "upper_quantile": 145,
+              "zero_probability": 0.0,
+              "simulation_mean": 127.032,
+              "simulation_variance": 123.06397600000001
+            },
+            "procedures": {
+              "mean": 975.36,
+              "variance": 8809.066528,
+              "sd": 93.85662751239254,
+              "interval": {
+                "lower": 791,
+                "upper": 1166
+              },
+              "upper_quantile": 1133,
+              "zero_probability": 0.0,
+              "simulation_mean": 976.209,
+              "simulation_variance": 8654.619319
+            },
+            "groups": [
+              {
+                "id": "t1_lt5",
+                "type": "СД1",
+                "duration": "<5 лет",
+                "label": "СД1 · <5 лет",
+                "n": 1000,
+                "risk_per_1000": 1.0,
+                "patients": {
+                  "mean": 1.0,
+                  "variance": 0.9990000000000001,
+                  "sd": 0.999499874937461,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 3
+                  },
+                  "upper_quantile": 3,
+                  "zero_probability": 0.377,
+                  "simulation_mean": 1.0005,
+                  "simulation_variance": 1.0674997499999999
+                },
+                "procedures": {
+                  "mean": 7.68,
+                  "variance": 70.76901760000001,
+                  "sd": 8.412432323650515,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 30
+                  },
+                  "upper_quantile": 24,
+                  "zero_probability": 0.377,
+                  "simulation_mean": 7.5955,
+                  "simulation_variance": 71.68587975
+                }
+              },
+              {
+                "id": "t1_5_9",
+                "type": "СД1",
+                "duration": "5–9 лет",
+                "label": "СД1 · 5–9 лет",
+                "n": 1000,
+                "risk_per_1000": 4.0,
+                "patients": {
+                  "mean": 4.0,
+                  "variance": 3.9839999999999995,
+                  "sd": 1.9959959919799437,
+                  "interval": {
+                    "lower": 1,
+                    "upper": 8
+                  },
+                  "upper_quantile": 8,
+                  "zero_probability": 0.017,
+                  "simulation_mean": 4.0195,
+                  "simulation_variance": 4.06311975
+                },
+                "procedures": {
+                  "mean": 30.72,
+                  "variance": 282.3682816,
+                  "sd": 16.80381747103913,
+                  "interval": {
+                    "lower": 4,
+                    "upper": 68
+                  },
+                  "upper_quantile": 62,
+                  "zero_probability": 0.017,
+                  "simulation_mean": 30.842,
+                  "simulation_variance": 281.897036
+                }
+              },
+              {
+                "id": "t1_10_19",
+                "type": "СД1",
+                "duration": "10–19 лет",
+                "label": "СД1 · 10–19 лет",
+                "n": 1000,
+                "risk_per_1000": 15.0,
+                "patients": {
+                  "mean": 15.0,
+                  "variance": 14.775,
+                  "sd": 3.843826218756514,
+                  "interval": {
+                    "lower": 8,
+                    "upper": 23
+                  },
+                  "upper_quantile": 21,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 15.0215,
+                  "simulation_variance": 13.73603775
+                },
+                "procedures": {
+                  "mean": 115.19999999999999,
+                  "variance": 1049.14896,
+                  "sd": 32.39056899778082,
+                  "interval": {
+                    "lower": 57,
+                    "upper": 185
+                  },
+                  "upper_quantile": 169,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 115.87,
+                  "simulation_variance": 986.2471
+                }
+              },
+              {
+                "id": "t1_ge20",
+                "type": "СД1",
+                "duration": "≥20 лет",
+                "label": "СД1 · ≥20 лет",
+                "n": 1000,
+                "risk_per_1000": 35.0,
+                "patients": {
+                  "mean": 35.0,
+                  "variance": 33.775,
+                  "sd": 5.811626278418116,
+                  "interval": {
+                    "lower": 24,
+                    "upper": 46
+                  },
+                  "upper_quantile": 44,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 34.8895,
+                  "simulation_variance": 32.92728974999999
+                },
+                "procedures": {
+                  "mean": 268.8,
+                  "variance": 2406.72656,
+                  "sd": 49.05839948469579,
+                  "interval": {
+                    "lower": 174,
+                    "upper": 366
+                  },
+                  "upper_quantile": 348,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 267.5395,
+                  "simulation_variance": 2418.0624397500005
+                }
+              },
+              {
+                "id": "t2_lt5",
+                "type": "СД2",
+                "duration": "<5 лет",
+                "label": "СД2 · <5 лет",
+                "n": 1000,
+                "risk_per_1000": 6.0,
+                "patients": {
+                  "mean": 6.0,
+                  "variance": 5.9639999999999995,
+                  "sd": 2.4421302176583457,
+                  "interval": {
+                    "lower": 2,
+                    "upper": 11
+                  },
+                  "upper_quantile": 10,
+                  "zero_probability": 0.0025,
+                  "simulation_mean": 5.9315,
+                  "simulation_variance": 6.021807750000001
+                },
+                "procedures": {
+                  "mean": 46.08,
+                  "variance": 422.8446335999999,
+                  "sd": 20.563186367875964,
+                  "interval": {
+                    "lower": 12,
+                    "upper": 93
+                  },
+                  "upper_quantile": 83,
+                  "zero_probability": 0.0025,
+                  "simulation_mean": 45.9195,
+                  "simulation_variance": 429.93201975
+                }
+              },
+              {
+                "id": "t2_5_9",
+                "type": "СД2",
+                "duration": "5–9 лет",
+                "label": "СД2 · 5–9 лет",
+                "n": 1000,
+                "risk_per_1000": 12.0,
+                "patients": {
+                  "mean": 12.0,
+                  "variance": 11.856,
+                  "sd": 3.443254274665175,
+                  "interval": {
+                    "lower": 6,
+                    "upper": 19
+                  },
+                  "upper_quantile": 18,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 12.0635,
+                  "simulation_variance": 11.782467750000002
+                },
+                "procedures": {
+                  "mean": 92.16,
+                  "variance": 841.4425344,
+                  "sd": 29.007628899998014,
+                  "interval": {
+                    "lower": 42,
+                    "upper": 154
+                  },
+                  "upper_quantile": 144,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 93.139,
+                  "simulation_variance": 841.335679
+                }
+              },
+              {
+                "id": "t2_10_19",
+                "type": "СД2",
+                "duration": "10–19 лет",
+                "label": "СД2 · 10–19 лет",
+                "n": 1000,
+                "risk_per_1000": 22.0,
+                "patients": {
+                  "mean": 22.0,
+                  "variance": 21.516,
+                  "sd": 4.638534251247909,
+                  "interval": {
+                    "lower": 14,
+                    "upper": 31
+                  },
+                  "upper_quantile": 29,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 21.9665,
+                  "simulation_variance": 20.38837775
+                },
+                "procedures": {
+                  "mean": 168.95999999999998,
+                  "variance": 1529.6685183999998,
+                  "sd": 39.11097695532547,
+                  "interval": {
+                    "lower": 98,
+                    "upper": 249
+                  },
+                  "upper_quantile": 234,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 168.584,
+                  "simulation_variance": 1464.366944
+                }
+              },
+              {
+                "id": "t2_ge20",
+                "type": "СД2",
+                "duration": "≥20 лет",
+                "label": "СД2 · ≥20 лет",
+                "n": 1000,
+                "risk_per_1000": 32.0,
+                "patients": {
+                  "mean": 32.0,
+                  "variance": 30.976,
+                  "sd": 5.5656086818963475,
+                  "interval": {
+                    "lower": 22,
+                    "upper": 43
+                  },
+                  "upper_quantile": 41,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 32.1395,
+                  "simulation_variance": 30.66303975
+                },
+                "procedures": {
+                  "mean": 245.76,
+                  "variance": 2206.0980223999995,
+                  "sd": 46.96911775198678,
+                  "interval": {
+                    "lower": 162,
+                    "upper": 343
+                  },
+                  "upper_quantile": 327,
+                  "zero_probability": 0.0,
+                  "simulation_mean": 246.7195,
+                  "simulation_variance": 2177.7438197499996
+                }
+              }
+            ],
+            "parameter_variance_patients": 0.0,
+            "event_variance_patients": 123.845,
+            "variance_components": {
+              "patients": {
+                "event": 123.845,
+                "parameter": 0.0
+              },
+              "procedures": {
+                "course": 1504.3912000000003,
+                "patients": 7304.675327999999,
+                "parameter": 0.0
+              }
+            }
+          },
+          {
+            "id": "vit",
+            "name": "Витрэктомия",
+            "unit": "операций",
+            "course_mean": 1.05,
+            "course_variance": 0.0475,
+            "period_mean": 1.05,
+            "period_variance": 0.0475,
+            "distribution_family": "1 + Бернулли дополнительной операции",
+            "truncated_mass_bound": 0.0,
+            "patients": {
+              "mean": 3.5999999999999996,
+              "variance": 3.596965,
+              "sd": 1.896566634737625,
+              "interval": {
+                "lower": 1,
+                "upper": 8
+              },
+              "upper_quantile": 7,
+              "zero_probability": 0.022,
+              "simulation_mean": 3.565,
+              "simulation_variance": 3.3247750000000003
+            },
+            "procedures": {
+              "mean": 3.78,
+              "variance": 4.1366539125,
+              "sd": 2.0338765725825154,
+              "interval": {
+                "lower": 1,
+                "upper": 8
+              },
+              "upper_quantile": 7,
+              "zero_probability": 0.022,
+              "simulation_mean": 3.7395,
+              "simulation_variance": 3.82163975
+            },
+            "groups": [
+              {
+                "id": "t1_lt5",
+                "type": "СД1",
+                "duration": "<5 лет",
+                "label": "СД1 · <5 лет",
+                "n": 1000,
+                "risk_per_1000": 0.05,
+                "patients": {
+                  "mean": 0.05,
+                  "variance": 0.0499975,
+                  "sd": 0.22360120751015636,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 1
+                  },
+                  "upper_quantile": 0,
+                  "zero_probability": 0.9525,
+                  "simulation_mean": 0.0485,
+                  "simulation_variance": 0.04814774999999999
+                },
+                "procedures": {
+                  "mean": 0.052500000000000005,
+                  "variance": 0.05749724375000001,
+                  "sd": 0.23978582891822445,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 1
+                  },
+                  "upper_quantile": 0,
+                  "zero_probability": 0.9525,
+                  "simulation_mean": 0.0495,
+                  "simulation_variance": 0.05104974999999999
+                }
+              },
+              {
+                "id": "t1_5_9",
+                "type": "СД1",
+                "duration": "5–9 лет",
+                "label": "СД1 · 5–9 лет",
+                "n": 1000,
+                "risk_per_1000": 0.1,
+                "patients": {
+                  "mean": 0.1,
+                  "variance": 0.09999000000000001,
+                  "sd": 0.3162119542332326,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 1
+                  },
+                  "upper_quantile": 1,
+                  "zero_probability": 0.894,
+                  "simulation_mean": 0.1115,
+                  "simulation_variance": 0.11006774999999999
+                },
+                "procedures": {
+                  "mean": 0.10500000000000001,
+                  "variance": 0.11498897500000002,
+                  "sd": 0.3391002432909773,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 1
+                  },
+                  "upper_quantile": 1,
+                  "zero_probability": 0.894,
+                  "simulation_mean": 0.116,
+                  "simulation_variance": 0.12354400000000001
+                }
+              },
+              {
+                "id": "t1_10_19",
+                "type": "СД1",
+                "duration": "10–19 лет",
+                "label": "СД1 · 10–19 лет",
+                "n": 1000,
+                "risk_per_1000": 0.4,
+                "patients": {
+                  "mean": 0.4,
+                  "variance": 0.39984000000000003,
+                  "sd": 0.6323290282756281,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 2
+                  },
+                  "upper_quantile": 1,
+                  "zero_probability": 0.673,
+                  "simulation_mean": 0.386,
+                  "simulation_variance": 0.376004
+                },
+                "procedures": {
+                  "mean": 0.42000000000000004,
+                  "variance": 0.45982360000000005,
+                  "sd": 0.6781029420375642,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 2
+                  },
+                  "upper_quantile": 2,
+                  "zero_probability": 0.673,
+                  "simulation_mean": 0.4035,
+                  "simulation_variance": 0.4216877499999999
+                }
+              },
+              {
+                "id": "t1_ge20",
+                "type": "СД1",
+                "duration": "≥20 лет",
+                "label": "СД1 · ≥20 лет",
+                "n": 1000,
+                "risk_per_1000": 1.25,
+                "patients": {
+                  "mean": 1.25,
+                  "variance": 1.2484375,
+                  "sd": 1.1173349990043273,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 4
+                  },
+                  "upper_quantile": 3,
+                  "zero_probability": 0.291,
+                  "simulation_mean": 1.223,
+                  "simulation_variance": 1.176271
+                },
+                "procedures": {
+                  "mean": 1.3125,
+                  "variance": 1.43577734375,
+                  "sd": 1.1982392681555718,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 4
+                  },
+                  "upper_quantile": 3,
+                  "zero_probability": 0.291,
+                  "simulation_mean": 1.2985,
+                  "simulation_variance": 1.40339775
+                }
+              },
+              {
+                "id": "t2_lt5",
+                "type": "СД2",
+                "duration": "<5 лет",
+                "label": "СД2 · <5 лет",
+                "n": 1000,
+                "risk_per_1000": 0.1,
+                "patients": {
+                  "mean": 0.1,
+                  "variance": 0.09999000000000001,
+                  "sd": 0.3162119542332326,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 1
+                  },
+                  "upper_quantile": 1,
+                  "zero_probability": 0.911,
+                  "simulation_mean": 0.094,
+                  "simulation_variance": 0.09616399999999999
+                },
+                "procedures": {
+                  "mean": 0.10500000000000001,
+                  "variance": 0.11498897500000002,
+                  "sd": 0.3391002432909773,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 1
+                  },
+                  "upper_quantile": 1,
+                  "zero_probability": 0.911,
+                  "simulation_mean": 0.1,
+                  "simulation_variance": 0.11399999999999999
+                }
+              },
+              {
+                "id": "t2_5_9",
+                "type": "СД2",
+                "duration": "5–9 лет",
+                "label": "СД2 · 5–9 лет",
+                "n": 1000,
+                "risk_per_1000": 0.2,
+                "patients": {
+                  "mean": 0.2,
+                  "variance": 0.19996,
+                  "sd": 0.4471688719041163,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 1
+                  },
+                  "upper_quantile": 1,
+                  "zero_probability": 0.817,
+                  "simulation_mean": 0.1955,
+                  "simulation_variance": 0.18327975000000002
+                },
+                "procedures": {
+                  "mean": 0.21000000000000002,
+                  "variance": 0.22995590000000002,
+                  "sd": 0.47953717269884305,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 1
+                  },
+                  "upper_quantile": 1,
+                  "zero_probability": 0.817,
+                  "simulation_mean": 0.206,
+                  "simulation_variance": 0.21456400000000003
+                }
+              },
+              {
+                "id": "t2_10_19",
+                "type": "СД2",
+                "duration": "10–19 лет",
+                "label": "СД2 · 10–19 лет",
+                "n": 1000,
+                "risk_per_1000": 0.5,
+                "patients": {
+                  "mean": 0.5,
+                  "variance": 0.4997500000000001,
+                  "sd": 0.706929982388638,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 2
+                  },
+                  "upper_quantile": 2,
+                  "zero_probability": 0.6015,
+                  "simulation_mean": 0.5165,
+                  "simulation_variance": 0.52772775
+                },
+                "procedures": {
+                  "mean": 0.525,
+                  "variance": 0.5747243750000002,
+                  "sd": 0.7581057808775766,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 2
+                  },
+                  "upper_quantile": 2,
+                  "zero_probability": 0.6015,
+                  "simulation_mean": 0.539,
+                  "simulation_variance": 0.588479
+                }
+              },
+              {
+                "id": "t2_ge20",
+                "type": "СД2",
+                "duration": "≥20 лет",
+                "label": "СД2 · ≥20 лет",
+                "n": 1000,
+                "risk_per_1000": 1.0,
+                "patients": {
+                  "mean": 1.0,
+                  "variance": 0.9990000000000001,
+                  "sd": 0.999499874937461,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 3
+                  },
+                  "upper_quantile": 3,
+                  "zero_probability": 0.368,
+                  "simulation_mean": 0.99,
+                  "simulation_variance": 0.9678999999999999
+                },
+                "procedures": {
+                  "mean": 1.05,
+                  "variance": 1.1488975000000001,
+                  "sd": 1.0718663629389626,
+                  "interval": {
+                    "lower": 0,
+                    "upper": 3
+                  },
+                  "upper_quantile": 3,
+                  "zero_probability": 0.368,
+                  "simulation_mean": 1.027,
+                  "simulation_variance": 1.0692709999999996
+                }
+              }
+            ],
+            "parameter_variance_patients": 0.0,
+            "event_variance_patients": 3.596965,
+            "variance_components": {
+              "patients": {
+                "event": 3.596965,
+                "parameter": 0.0
+              },
+              "procedures": {
+                "course": 0.17099999999999999,
+                "patients": 3.9656539125,
+                "parameter": 0.0
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

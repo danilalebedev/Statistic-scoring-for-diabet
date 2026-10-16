@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+.runtime/
+streamlit_component/
+.streamlit/secrets.toml
