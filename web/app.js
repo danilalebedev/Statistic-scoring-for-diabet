@@ -265,18 +265,6 @@
     try { const url = new URL(value); return ["https:", "http:"].includes(url.protocol) ? url.href : ""; } catch { return ""; }
   }
 
-  function sourceMarkup(source, index) {
-    const url = safeURL(source.url);
-    return `<article class="source-item"><span class="source-index">${String(index + 1).padStart(2, "0")}</span><div><h3>${html(source.title)}</h3>${source.finding ? `<p>${html(source.finding)}</p>` : ""}${source.limitation ? `<p><strong>Ограничение:</strong> ${html(source.limitation)}</p>` : ""}${url ? `<a class="source-link" href="${html(url)}" target="_blank" rel="noopener noreferrer">Первоисточник ↗</a>` : ""}</div></article>`;
-  }
-
-  function renderSources() {
-    const sources = Array.isArray(config.sources) ? config.sources : [];
-    const markup = sources.map(sourceMarkup).join("") || '<p class="source-list-empty">Источники описаны в методике модели.</p>';
-    $("#all-sources").innerHTML = markup;
-    $("#profile-sources").innerHTML = markup;
-  }
-
   function syncGeneralControls() {
     $("#coverage-custom").value = roundPercent(state.coverage);
     $("#iterations").value = state.iterations;
@@ -671,7 +659,7 @@
       }, {once: true});
     } catch (error) {
       guideLoaded = false;
-      $("#guide-loading").textContent = `${error.message} Раздел с источниками ниже доступен для просмотра.`;
+      $("#guide-loading").textContent = `${error.message} Обновите страницу или нажмите «Открыть отдельно».`;
     }
   }
 
@@ -785,7 +773,6 @@
       state.include_comparison = false;
       if (!currentProfile()) throw new Error("В конфигурации отсутствует исходный годовой сценарий по группам.");
       renderInputs();
-      renderSources();
       markDirty();
       if (config.runtime === "browser") {
         $("#runtime-label").textContent = "В браузере";
